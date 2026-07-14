@@ -7,7 +7,7 @@ configuration:
   analytics:
     provider: null
   locale: fr-FR
-  baseUrl: tchappe1.github.io/chantier-12-souverainete-numerique
+  baseUrl: tchappe1.github.io/portail-souverainete-numerique
   ignorePatterns:
     - private
     - templates
