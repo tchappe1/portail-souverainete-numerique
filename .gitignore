@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Quartz
+website/node_modules/
+website/public/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Obsidian (si un jour tu ajoutes un Vault local)
+vault/.obsidian/workspace.json
+vault/.obsidian/workspaces.json
