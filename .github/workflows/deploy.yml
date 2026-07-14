@@ -41,7 +41,7 @@ jobs:
         run: npx quartz plugin install --from-config
 
       - name: Build Quartz
-        run: npx quartz build
+        run: npx quartz build --directory content
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
