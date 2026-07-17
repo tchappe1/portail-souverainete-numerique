@@ -1,25 +1,16 @@
----
-title: 01 - 🧠  Bienvenue dans le Cerveau collectif du chantier Souveraineté Numérique
----
+
+# Bienvenue dans le Cerveau collectif 🧠 du chantier Souveraineté Numérique
 
 ## Pourquoi un Cerveau collectif ?
 
-Le chantier Souveraineté Numérique va progressivement produire et collecter une grande quantité de connaissances :
+Le chantier Souveraineté Numérique va progressivement produire et collecter une grande quantité de connaissances (rapports et études ; interviews d’experts ; benchmarks et retours d’expérience ; concepts et définitions ...)
 
-- rapports et études ;
-- interviews d’experts ;
-- comptes-rendus de workshops ;
-- benchmarks et retours d’expérience ;
-- concepts et définitions ;
-- initiatives et solutions ;
-- analyses et réflexions du Groupe de Travail ;
-- décisions et orientations du chantier.
-
--
 L’objectif du Cerveau collectif est de **transformer cette information dispersée en une mémoire commune, structurée et exploitable**.
 
-Il doit nous permettre de retrouver rapidement une information, de relier les sujets entre eux, de capitaliser sur les travaux réalisés et d'alimenter les outils d'intelligence artificielle utilisés pour soutenir nos analyses.
+Il doit nous permettre de retrouver rapidement une information, de relier les sujets entre eux, de capitaliser sur les travaux réalisés et d'**alimenter les outils d'intelligence artificielle utilisés pour soutenir nos analyses.**
 
+
+>[!TIP] Important
 > La qualité des analyses produites avec l'IA dépend directement de la qualité du contexte que nous construisons collectivement.
 
 ---
@@ -63,3 +54,9 @@ Le Cerveau collectif n'est pas un livrable figé.
 Chaque rapport lu, chaque expert rencontré, chaque workshop et chaque débat peut enrichir notre compréhension du sujet.
 
 Notre ambition est que, progressivement, le chantier construise non seulement des recommandations, mais également **un patrimoine de connaissances structuré, traçable et réutilisable pour les futurs travaux de Paradigm et de la Région**.
+
+
+### Pour aller plus loin 
+
+👉 [[02 - 👥 Comment contribuer ?]]
+👉 [[03 - ✍️ Comment rédiger une fiche ?]]
