@@ -1,7 +1,7 @@
 ---
 type:
   - Note
-statut: En cours de rédaction
+statut: Finalisé
 author: Duc PHAN
 description: Liste des questions posées à Microsoft concernant la souveraineté numérique
 ---
