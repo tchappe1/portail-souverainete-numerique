@@ -48,4 +48,67 @@ Risques, limites, controverses, incertitudes ou informations restant à vérifie
 Liste des documents, articles, interviews ou autres références utilisées.
 
 ## Liens avec d'autres sujets
-Concepts, acteurs, technologies, risques ou initiatives associés.
+Concepts, acteurs, technologies, risques ou initiatives associés
+
+## Utilisation des Callouts
+
+Les callouts permettent de mettre en évidence une information particulière. Priviliez les types suivants afin de conserver une présentation homogène.
+
+| Callout            | Utilisation                     | Code                              |
+| ------------------ | ------------------------------- | --------------------------------- |
+| **Note**           | Précision complémentaire        | `> [!NOTE] Note`                  |
+| **Résumé**         | Synthèse, points clés           | `> [!ABSTRACT] Résumé`            |
+| **Information**    | Information importante          | `> [!INFO] Information`           |
+| **Recommandation** | Conseil, bonne pratique, piste  | `> [!TIP] Recommandation`         |
+| **Attention**      | Point de vigilance              | `> [!WARNING] Point d'attention`  |
+| **Danger**         | Risque important ou critique    | `> [!DANGER] Risque important`    |
+| **Question**       | Sujet à investiguer             | `> [!QUESTION] À investiguer`     |
+| **À faire**        | Action à réaliser               | `> [!TODO] À faire`               |
+| **Validé**         | Décision ou élément validé      | `> [!SUCCESS] Validé`             |
+| **Échec**          | Problème ou faiblesse identifié | `> [!FAILURE] Problème identifié` |
+| **Citation**       | Citation ou source              | `> [!QUOTE] Citation / Source`    |
+| **Exemple**        | Exemple ou cas concret          | `> [!EXAMPLE] Exemple`            |
+
+
+> [!TIP] Bon usage
+> Utilisez les callouts avec parcimonie. Leur rôle est de faire ressortir les informations importantes, pas de remplacer la structure de la fiche.
+
+
+
+### Aperçu
+
+> [!NOTE] Note
+> Ceci est une note.
+
+> [!ABSTRACT] Résumé
+> Résumé du contenu.
+
+> [!INFO] Information
+> Information importante.
+
+> [!TIP] Recommandation
+> Recommandation ou bonne pratique.
+
+> [!WARNING] Point d'attention
+> Élément nécessitant une vigilance particulière.
+
+> [!DANGER] Risque important
+> Risque majeur ou critique.
+
+> [!QUESTION] À investiguer
+> Question nécessitant une recherche.
+
+> [!TODO] À faire
+> Action à réaliser.
+
+> [!SUCCESS] Validé
+> Élément ou décision validé.
+
+> [!FAILURE] Problème identifié
+> Échec, faiblesse ou problème.
+
+> [!QUOTE] Citation / Source
+> Citation ou extrait d'une source.
+
+> [!EXAMPLE] Exemple
+> Exemple ou cas concret.
