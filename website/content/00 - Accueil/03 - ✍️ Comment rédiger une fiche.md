@@ -54,6 +54,7 @@ Concepts, acteurs, technologies, risques ou initiatives associés
 
 Les callouts permettent de mettre en évidence une information particulière. Priviliez les types suivants afin de conserver une présentation homogène.
 
+
 | Callout            | Utilisation                     | Code                              |
 | ------------------ | ------------------------------- | --------------------------------- |
 | **Note**           | Précision complémentaire        | `> [!NOTE] Note`                  |

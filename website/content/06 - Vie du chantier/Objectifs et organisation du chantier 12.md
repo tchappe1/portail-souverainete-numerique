@@ -251,6 +251,8 @@ La logique proposée est plutôt :
 **Projets concrets**
 → expérimentation et mise en œuvre
 
+![[Pasted image 20260916184441.png]]
+
 ---
 
 # 📌 Principes de fonctionnement

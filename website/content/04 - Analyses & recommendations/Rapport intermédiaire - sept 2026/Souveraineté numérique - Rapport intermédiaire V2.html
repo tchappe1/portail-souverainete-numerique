@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Chantier 12 : point d’étape, cerveau collectif et premiers repères pour le TOM IT d’Atlas. Septembre 2026.">
+<title>Souveraineté numérique · Rapport intermédiaire V2 · Septembre 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,800&display=swap" rel="stylesheet">
+<style>
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* === THÈME : continuité Paradigm, hiérarchie adaptée à l’oral === */
+:root { --blue:#354095; --red:#C41E3A; --teal:#134F5C; --ink:#20263B; --muted:#596277; --paper:#fff; --panel:#F3F5FB; --mint:#DFEFE8; --line:#D9DFEA; --stage-bg:#111626; --slide-bg:#fff; --font:'Open Sans',sans-serif; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:var(--font); color:var(--ink); }
+.slide { padding:82px 108px 116px; }
+.slide::before { content:''; position:absolute; left:0; top:0; width:12px; height:1080px; background:var(--blue); }
+.kicker { font-size:20px; text-transform:uppercase; letter-spacing:.17em; color:var(--muted); margin-bottom:20px; font-weight:600; }
+h1 { font-size:102px; font-weight:300; line-height:1.12; letter-spacing:-.035em; padding-bottom:14px; margin-bottom:-14px; }
+h2 { font-size:62px; line-height:1.15; font-weight:800; font-style:italic; color:var(--blue); letter-spacing:-.025em; max-width:1650px; padding-bottom:8px; margin-bottom:-8px; }
+h3 { font-size:33px; line-height:1.2; margin-bottom:18px; color:var(--blue); }
+p,li { font-size:29px; line-height:1.5; }
+strong { font-weight:700; }
+.sub { font-size:28px; color:var(--muted); margin-top:20px; max-width:1540px; }
+.body { margin-top:44px; }
+.cols { display:grid; grid-template-columns:1fr 1fr; gap:46px; }
+.three { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+.five { display:grid; grid-template-columns:repeat(5,1fr); gap:22px; }
+.card { background:var(--panel); border-radius:18px; padding:34px; }
+.card p { font-size:28px; }
+.card .label { margin-bottom:26px; }
+.label { font-size:19px; letter-spacing:.1em; text-transform:uppercase; color:var(--red); font-weight:700; }
+.tag { display:inline-block; padding:9px 16px; border:1px solid currentColor; border-radius:30px; font-size:20px; font-weight:600; color:var(--teal); }
+.tag.proposal { color:var(--red); }
+.large { font-size:42px; line-height:1.4; }
+.small { font-size:23px; line-height:1.45; }
+.muted { color:var(--muted); }
+.accent { color:var(--red); }
+.teal { color:var(--teal); }
+.takeaway { position:absolute; left:108px; right:108px; bottom:136px; border-left:5px solid var(--red); padding:12px 0 12px 26px; font-size:30px; line-height:1.4; }
+.foot { position:absolute; left:108px; right:108px; bottom:54px; border-top:1px solid var(--line); padding-top:18px; display:flex; justify-content:space-between; gap:30px; color:var(--muted); font-size:18px; }
+.foot span:first-child { max-width:1450px; }
+.folio { white-space:nowrap; font-weight:700; letter-spacing:.06em; }
+.num { font-size:74px; font-weight:300; color:var(--red); line-height:1; margin-bottom:26px; }
+.icon { width:56px; height:56px; color:var(--blue); fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; margin-bottom:24px; }
+ul { list-style:none; }
+.list li { padding:21px 0 21px 32px; border-bottom:1px solid var(--line); position:relative; }
+.list li::before { content:''; width:9px; height:9px; background:var(--red); position:absolute; left:0; top:39px; border-radius:50%; }
+.strip { background:var(--mint); color:var(--teal); padding:22px 30px; font-size:26px; border-radius:12px; margin-top:28px; }
+.speaker-notes { display:none; }
+
+/* === COUVERTURE ET CONCLUSION : réseau de connaissances === */
+.dark { background:#152335; color:#fff; }
+.dark::before { background:var(--red); }
+.dark h2,.dark h3,.dark .kicker { color:#fff; }
+.dark .foot { color:#B6C8D7; border-color:#455365; }
+.dark .sub { color:#C3D3DF; }
+.cover-copy { position:relative; z-index:2; width:1120px; margin-top:124px; }
+.cover-copy h1 em { color:#A8D9CE; font-style:normal; font-weight:700; }
+.cover-copy p { margin-top:44px; width:1050px; font-size:32px; color:#D9E3EB; }
+.cover-brand { display:flex; align-items:center; gap:22px; font-size:26px; letter-spacing:.12em; }
+.cover-brand b { color:#fff; font-size:32px; letter-spacing:-.04em; }
+.cover-art { position:absolute; right:74px; top:220px; width:600px; height:650px; color:#7BBBAD; opacity:.8; }
+.cover-meta { position:absolute; bottom:170px; left:108px; font-size:24px; color:#D1DDE7; }
+.brain-line { fill:none; stroke:currentColor; stroke-width:3; stroke-linejoin:round; stroke-linecap:round; }
+.network { fill:none; stroke:currentColor; stroke-width:1.3; opacity:.65; }
+.node { fill:currentColor; }
+.signal { stroke-dasharray:7 12; animation:travel 8s linear infinite; }
+.slide:not(.active) .signal { animation-play-state:paused; }
+@keyframes travel { to { stroke-dashoffset:-190; } }
+
+/* === MISES EN PAGE SPÉCIFIQUES === */
+.two-questions { grid-template-columns:1.3fr 1fr; gap:80px; }
+.question-line { display:grid; grid-template-columns:90px 1fr; gap:24px; margin-bottom:48px; }
+.question-line p { font-size:40px; line-height:1.35; }
+.definition { font-size:41px; max-width:1570px; line-height:1.46; border-left:5px solid var(--red); padding-left:34px; }
+.verbs { margin-top:44px; }
+.verbs .card { padding:28px 32px; border-top:4px solid var(--blue); }
+.verbs h3 { font-size:35px; }
+.myths { width:100%; border-collapse:collapse; }
+.myths td { padding:21px 22px; border-bottom:1px solid var(--line); font-size:28px; line-height:1.35; vertical-align:top; }
+.myths td:first-child { width:40%; color:var(--blue); font-weight:700; }
+.axes .card { padding:29px 25px; min-height:470px; border-top:4px solid var(--blue); }
+.axes h3 { font-size:28px; min-height:76px; }
+.axes p { font-size:24px; }
+.axes .example { border-top:1px solid var(--line); padding-top:20px; margin-top:22px; color:var(--teal); }
+.axes .example b { font-size:17px; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:9px; }
+.objectives { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+.objective { display:grid; grid-template-columns:92px 1fr; gap:22px; padding:30px 32px; background:var(--panel); border-radius:16px; }
+.objective h3 { margin-bottom:10px; }
+.objective p { font-size:27px; }
+.objective .num { margin:0; }
+
+/* === ORGANISATION : entrées, mémoire, synthèse, usages et retour des tests === */
+.org { position:relative; height:622px; margin-top:42px; }
+.org-wires { position:absolute; inset:0; width:1704px; height:622px; overflow:visible; color:var(--teal); }
+.org-box { position:absolute; border-radius:15px; padding:22px 26px; background:var(--panel); }
+.org-box h3 { font-size:29px; margin:0 0 9px; }
+.org-box p { font-size:23px; line-height:1.35; }
+.org-box .label { font-size:17px; margin-bottom:10px; }
+.org-input { left:0; width:350px; height:98px; padding:19px 24px; display:flex; gap:18px; align-items:center; }
+.org-input .icon { width:42px; height:42px; margin:0; flex-shrink:0; }
+.org-input h3 { font-size:24px; margin-bottom:5px; }
+.org-input p { font-size:21px; }
+.org-core { left:460px; top:26px; width:360px; height:392px; background:var(--teal); color:white; text-align:center; }
+.org-core h3 { color:white; font-size:33px; }
+.org-core .label { color:#BDE1D9; }
+.org-core .brain { width:145px; height:130px; color:#BDE1D9; margin-bottom:12px; }
+.org-analysis { left:930px; top:114px; width:320px; height:248px; }
+.org-audience { left:1360px; top:96px; width:344px; height:254px; background:var(--mint); }
+.org-tests { left:930px; top:448px; width:774px; height:180px; border:2px dashed var(--red); background:#FFF9F9; }
+.org-tests h3 { font-size:26px; }
+.org-tests p { font-size:22px; }
+.org-tests .label { font-size:17px; }
+.org-feedback { position:absolute; left:466px; top:514px; width:390px; font-size:23px; color:var(--teal); }
+.org-caption { position:absolute; left:0; bottom:22px; width:350px; font-size:23px; color:var(--muted); }
+
+/* === ARCHITECTURE : la couche IA s’ajoute au corpus maîtrisé === */
+.architecture { display:grid; grid-template-columns:370px 1fr 425px; gap:32px; margin-top:44px; }
+.architecture .column { border-top:4px solid var(--blue); padding-top:24px; }
+.architecture h3 { font-size:30px; }
+.architecture .small { font-size:26px; }
+.vault { background:var(--teal); color:white; padding:30px; border-radius:16px; }
+.vault h3 { color:white; }
+.vault-grid { display:grid; grid-template-columns:1fr 1fr; gap:13px; margin-top:25px; }
+.vault-grid div { border:1px solid #5C8991; padding:17px; font-size:23px; border-radius:7px; }
+.future { border:2px dashed var(--red); padding:20px; border-radius:12px; margin-top:23px; }
+.future p { font-size:23px; }
+.project-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:25px; margin-top:35px; }
+.project-steps .card { padding:26px; }
+.project-steps h3 { font-size:29px; }
+.project-steps p { font-size:24px; }
+.criteria { display:flex; gap:18px; margin-top:30px; }
+.criteria span { flex:1; border-top:3px solid var(--teal); padding-top:14px; font-size:22px; color:var(--teal); }
+.state-card { border-top:4px solid var(--blue); min-height:365px; }
+.state-card:nth-child(2) { border-top-color:var(--teal); }
+.state-card:nth-child(3) { border-top-color:var(--red); }
+.state-card p+p { margin-top:24px; }
+.chain { display:grid; grid-template-columns:repeat(3,1fr); gap:56px; }
+.chain .card { position:relative; min-height:330px; }
+.chain .card:not(:last-child)::after { content:'→'; position:absolute; right:-45px; top:110px; color:var(--red); font-size:42px; }
+.case p { font-size:25px; margin-top:19px; }
+.case h3 { font-size:32px; }
+.case .label { font-size:17px; display:block; margin-bottom:6px; }
+.asset-layer { padding:24px 32px; display:grid; grid-template-columns:260px 1fr; gap:30px; border-bottom:1px solid var(--line); }
+.asset-layer h3 { margin:0; font-size:30px; }
+.asset-layer p { font-size:27px; }
+.contrast { padding:38px; background:var(--teal); color:white; border-radius:16px; }
+.contrast h3 { color:#BDE1D9; }
+.contrast p { font-size:32px; }
+.compare .card { min-height:410px; border-top:4px solid var(--red); }
+.compare .card:nth-child(2) { border-top-color:var(--teal); }
+.compare .list li { font-size:28px; }
+.bench h3 { min-height:82px; }
+.bench p { font-size:27px; }
+.bench .question { margin-top:26px; color:var(--teal); }
+.matrix { border-collapse:collapse; width:100%; }
+.matrix th { font-size:20px; text-transform:uppercase; letter-spacing:.06em; color:var(--red); text-align:left; padding:0 22px 17px; border-bottom:2px solid var(--red); }
+.matrix td { font-size:27px; line-height:1.35; padding:20px 22px; border-bottom:1px solid var(--line); vertical-align:top; }
+.matrix td:first-child { width:27%; font-weight:700; color:var(--blue); }
+.matrix.three-col td:first-child { width:24%; }
+.matrix.three-col td:nth-child(2) { width:31%; }
+.process { display:grid; grid-template-columns:repeat(5,1fr); gap:22px; margin-top:44px; }
+.process .card { padding:27px 23px; }
+.process h3 { font-size:28px; }
+.process p { font-size:24px; }
+.distinctions { display:flex; margin-top:35px; gap:30px; font-size:25px; color:var(--teal); }
+.distinctions div { flex:1; padding:20px; background:var(--mint); border-radius:9px; }
+.timeline { border-top:3px solid var(--blue); padding-top:34px; margin-top:62px; }
+.timeline .card { position:relative; min-height:385px; }
+.timeline .card::before { content:''; position:absolute; width:18px; height:18px; border-radius:50%; background:var(--red); left:34px; top:-45px; }
+.timeline p+p { margin-top:24px; }
+.closing { margin-top:62px; width:1320px; }
+.closing-item { display:grid; grid-template-columns:100px 1fr; gap:30px; padding:30px 0; border-bottom:1px solid #455365; }
+.closing-item .num { color:#A8D9CE; margin:0; }
+.closing-item p { font-size:40px; line-height:1.35; }
+.closing-art { position:absolute; width:240px; right:120px; top:355px; color:#A8D9CE; }
+
+/* === MOUVEMENT : apparition courte, flux SVG lent === */
+.reveal { opacity:0; transform:translateY(14px); }
+.visible .reveal { animation:appear .45s ease both; }
+.visible .reveal:nth-child(2) { animation-delay:.08s; }
+.visible .reveal:nth-child(3) { animation-delay:.16s; }
+.visible .reveal:nth-child(4) { animation-delay:.24s; }
+@keyframes appear { to { opacity:1; transform:none; } }
+@media (prefers-reduced-motion:reduce) { .signal { animation:none !important; } .reveal { opacity:1; transform:none; } }
+
+/* === COMMANDES, SOMMAIRE, NOTES ET ÉDITION === */
+.deck-controls { bottom:8px; display:flex; gap:4px; align-items:center; padding:5px 8px; border:1px solid #485269; border-radius:12px; background:#152335f2; color:white; max-width:calc(100vw - 12px); }
+button,select { font:600 12px var(--font); }
+.deck-controls button,.deck-controls select { background:transparent; color:white; border:0; padding:8px; border-radius:7px; cursor:pointer; }
+.deck-controls button:hover,.deck-controls select:hover { background:#354095; }
+.deck-controls select { width:105px; }
+.deck-controls option { background:#152335; }
+.deck-controls button:disabled { opacity:.3; cursor:default; }
+#counter { white-space:nowrap; font-size:12px; font-variant-numeric:tabular-nums; padding:0 7px; }
+button:focus-visible,select:focus-visible,a:focus-visible { outline:3px solid #80CABB; outline-offset:2px; }
+.editing [data-edit] { outline:2px dashed #C41E3A80; outline-offset:5px; cursor:text; }
+.editing [data-edit]:focus { outline-color:var(--red); }
+.edit-tools { position:fixed; top:12px; left:12px; display:flex; gap:6px; z-index:1002; }
+.edit-tools button { border:1px solid #626D84; background:#152335; color:white; padding:10px 15px; border-radius:8px; cursor:pointer; }
+.editing #editToggle { background:var(--red); }
+.edit-tools .only-edit { display:none; }
+.editing .edit-tools .only-edit { display:block; }
+#toast { position:fixed; top:66px; left:12px; max-width:calc(100vw - 24px); padding:12px 17px; background:#152335; color:white; z-index:1003; border-radius:9px; font-size:14px; }
+#toast:empty { display:none; }
+dialog { position:fixed; margin:auto; width:min(860px,92vw); max-height:82vh; border:1px solid var(--line); border-radius:16px; padding:30px; overflow:auto; color:var(--ink); font-family:var(--font); }
+dialog::backdrop { background:#111626b8; }
+dialog h2 { font-size:25px; padding-right:40px; }
+dialog p { font-size:17px; margin-top:18px; }
+dialog button { position:absolute; top:14px; right:14px; padding:9px; cursor:pointer; }
+dialog .note-source { border-top:1px solid var(--line); margin-top:24px; padding-top:15px; color:var(--muted); }
+.symbol-library { position:absolute; width:0; height:0; overflow:hidden; }
+@page { size:20in 11.25in; margin:0; }
+@media print { .edit-tools,dialog,#toast { display:none !important; } .reveal { opacity:1 !important; transform:none !important; animation:none !important; } .signal { animation:none; } * { print-color-adjust:exact; -webkit-print-color-adjust:exact; } [data-edit] { outline:none !important; } }
+</style>
+</head>
+<body>
+<!-- === BIBLIOTHÈQUE SVG : pictogrammes et cerveau dessinés dans le fichier === -->
+<svg class="symbol-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+<symbol id="i-data" viewBox="0 0 32 32"><ellipse cx="16" cy="7" rx="11" ry="4"/><path d="M5 7v17c0 5 22 5 22 0V7M5 15c0 5 22 5 22 0M5 23c0 5 22 5 22 0"/></symbol>
+<symbol id="i-tech" viewBox="0 0 32 32"><path d="M11 7 3 16l8 9M21 7l8 9-8 9M18 4l-4 24"/></symbol>
+<symbol id="i-money" viewBox="0 0 32 32"><path d="M24 7c-12-10-22 15-7 20 3 1 6-1 7-2M4 13h16M4 19h14"/></symbol>
+<symbol id="i-continuity" viewBox="0 0 32 32"><path d="M26 12A11 11 0 0 0 7 7L3 11M3 4v7h7M6 20a11 11 0 0 0 19 5l4-4M29 28v-7h-7"/></symbol>
+<symbol id="i-people" viewBox="0 0 32 32"><circle cx="12" cy="9" r="5"/><path d="M2 28v-5c0-9 20-9 20 0v5M23 5c7 0 7 9 1 10M25 19c5 0 5 5 5 9"/></symbol>
+<symbol id="i-search" viewBox="0 0 32 32"><circle cx="13" cy="13" r="9"/><path d="m20 20 9 9"/></symbol>
+<symbol id="i-world" viewBox="0 0 32 32"><circle cx="16" cy="16" r="13"/><ellipse cx="16" cy="16" rx="6" ry="13"/><path d="M3 16h26M6 8h20M6 24h20"/></symbol>
+<symbol id="i-eval" viewBox="0 0 32 32"><path d="M7 4h18v25H7zM11 11l2 2 5-5M11 21l2 2 5-5M21 11h1M21 21h1"/></symbol>
+<symbol id="brain" viewBox="0 0 300 280">
+<g class="brain-line"><path d="M148 47c-16-35-65-22-69 8-31-6-50 15-46 42-32 15-35 61-10 80-12 31 5 59 34 60 5 34 52 42 73 16l18-14V47Zm4 0c16-35 65-22 69 8 31-6 50 15 46 42 32 15 35 61 10 80 12 31-5 59-34 60-5 34-52 42-73 16l-18-14V47Z"/><path d="M79 55c-7 29 10 39 32 40M33 97c28-7 43 4 46 29M23 177c35 9 52-8 50-33M57 237c2-25 17-36 38-32M148 142c-29-13-51 0-50 29M130 253c-19-17-22-36-10-52M221 55c7 29-10 39-32 40M267 97c-28-7-43 4-46 29M277 177c-35 9-52-8-50-33M243 237c-2-25-17-36-38-32M152 142c29-13 51 0 50 29M170 253c19-17 22-36 10-52"/></g>
+<g class="network"><path d="m61 103 46 26 43-51 49 51 40-26M107 129l-8 61 51 33 52-33-3-61M99 190l100-61M107 129l95 61"/></g>
+<g class="node"><circle cx="61" cy="103" r="5"/><circle cx="107" cy="129" r="6"/><circle cx="150" cy="78" r="6"/><circle cx="199" cy="129" r="6"/><circle cx="239" cy="103" r="5"/><circle cx="99" cy="190" r="6"/><circle cx="150" cy="223" r="6"/><circle cx="202" cy="190" r="6"/></g>
+</symbol>
+</defs></svg>
+<div class="deck-viewport"><main class="deck-stage" id="deckStage" aria-label="Présentation du Chantier 12">
+
+<!-- === S01 : couverture === -->
+<section class="slide dark active visible" id="s01" data-title="Connaître, maîtriser, arbitrer">
+<div class="cover-brand"><b>paradigm</b><span>CHANTIER 12</span></div>
+<div class="cover-copy reveal"><p class="kicker" data-edit="s01-kicker">Souveraineté numérique · Point d’étape</p><h1 data-edit="s01-title">Connaître, maîtriser<br>et arbitrer<br><em>nos dépendances.</em></h1><p data-edit="s01-intro">Premiers enseignements et repères pour le modèle opérationnel cible IT d’Atlas.</p></div>
+<svg class="cover-art" viewBox="0 0 600 650" aria-label="Cerveau en réseau, symbole de la mémoire collective" role="img"><g class="network signal"><path d="M0 100 130 190 80 340 210 510 460 560 560 370 490 140 330 60 130 190M80 340 560 370M210 510 490 140M0 100 330 60"/></g><use href="#brain" x="120" y="180" width="370" height="350"/><g class="node"><circle cx="0" cy="100" r="8"/><circle cx="130" cy="190" r="7"/><circle cx="80" cy="340" r="10"/><circle cx="210" cy="510" r="8"/><circle cx="460" cy="560" r="10"/><circle cx="560" cy="370" r="8"/><circle cx="490" cy="140" r="10"/><circle cx="330" cy="60" r="8"/></g></svg>
+<p class="cover-meta" data-edit="s01-date">Septembre 2026 · Point d’étape informatif · Aucune décision demandée</p>
+<footer class="foot"><span>Région de Bruxelles-Capitale · Support de travail V2 · 16 septembre 2026</span><span class="folio">01 / 22</span></footer>
+<aside class="speaker-notes">Cette présentation est destinée en priorité au GT IT d’Atlas, la nouvelle administration Bruxelles-Transversalité, anciennement appelée Pilier 1. Le 16 septembre est la date de préparation du support ; la date exacte du bilan reste à confirmer. Le document propose des repères, pas une doctrine ni un choix de fournisseur.</aside>
+</section>
+
+<!-- === S02 : cadrage, deux questions et périmètre === -->
+<section class="slide" id="s02" data-title="Deux questions pour ce point d’étape">
+<p class="kicker">Cadrage</p><h2 data-edit="s02-title">Deux questions pour ce point d’étape</h2>
+<div class="body cols two-questions"><div><div class="question-line reveal"><span class="num">01</span><p data-edit="s02-q1">Où en sont la réflexion<br>et les travaux du chantier ?</p></div><div class="question-line reveal"><span class="num">02</span><p data-edit="s02-q2">Quels repères intégrer<br>au TOM IT d’Atlas ?</p></div></div><div class="card reveal"><p class="label">Destinataire prioritaire</p><h3 data-edit="s02-atlas">Le groupe de travail IT d’Atlas</h3><p data-edit="s02-definition">Atlas, la nouvelle administration Bruxelles-Transversalité, anciennement appelée Pilier 1.</p><p class="small muted" style="margin-top:25px" data-edit="s02-tom">TOM IT : modèle opérationnel cible des activités informatiques.</p></div></div>
+<p class="takeaway" data-edit="s02-take">Une ambition régionale ; un diagnostic encore partiel, principalement centré sur Paradigm.</p>
+<footer class="foot"><span>Sources : contexte du projet ; V6, § 0–2 ; V7, cadrage. Date exacte du bilan à confirmer.</span><span class="folio">02 / 22</span></footer>
+<aside class="speaker-notes">Paradigm porte le chantier ; Atlas est le destinataire prioritaire du point d’étape ; la Région constitue le périmètre d’ambition. Ces trois périmètres ne sont pas interchangeables. Le support suit cinq étapes : comprendre, situer le chantier, partager les enseignements, éclairer le TOM IT, préparer la suite.</aside>
+</section>
+
+<!-- === S03 : définition lisible, sans guillemets décoratifs ni étiquettes encombrantes === -->
+<section class="slide" id="s03" data-title="Maîtriser plutôt que tout posséder">
+<p class="kicker">01 · Comprendre</p><h2 data-edit="s03-title">Maîtriser plutôt que tout posséder</h2>
+<div class="body"><p class="definition reveal" data-edit="s03-definition">La souveraineté numérique désigne la capacité d’une organisation à <strong class="accent">connaître, maîtriser et arbitrer ses dépendances numériques</strong> afin de préserver sa capacité de décision, d’action et de continuité.</p>
+<div class="three verbs"><div class="card reveal"><h3 data-edit="s03-v1">Connaître</h3><p data-edit="s03-p1">De quoi dépend le service ?</p></div><div class="card reveal"><h3 data-edit="s03-v2">Maîtriser</h3><p data-edit="s03-p2">Quelles marges de manœuvre ?</p></div><div class="card reveal"><h3 data-edit="s03-v3">Arbitrer</h3><p data-edit="s03-p3">Quels risques accepter ou réduire ?</p></div></div></div>
+<p class="takeaway" data-edit="s03-take">Une dépendance peut être acceptée si elle est connue, proportionnée et pilotée.</p>
+<footer class="foot"><span>Sources : Souveraineté Numérique ; V6 § 4.1 ; V7 § 1.2. Définition de travail à confirmer collectivement.</span><span class="folio">03 / 22</span></footer>
+<aside class="speaker-notes">La formulation reprend la définition proposée dans les V6/V7. La fiche concept comporte encore deux formulations concurrentes. On conserve donc le statut de définition de travail. L’analyse porte sur les usages et les conséquences pour les missions publiques ; elle n’implique pas une indépendance absolue.</aside>
+</section>
+
+<!-- === S04 : idées reçues === -->
+<section class="slide" id="s04" data-title="Aucun raccourci ne suffit">
+<p class="kicker">01 · Comprendre</p><h2 data-edit="s04-title">Aucun raccourci ne suffit</h2>
+<table class="myths body reveal"><tbody>
+<tr><td data-edit="s04-a1">« Sortir de Microsoft »</td><td data-edit="s04-b1">Examiner les usages et les alternatives, service par service.</td></tr>
+<tr><td data-edit="s04-a2">« Interdire les clouds non européens »</td><td data-edit="s04-b2">Définir les exigences selon les données, les usages et les risques.</td></tr>
+<tr><td data-edit="s04-a3">« Héberger en Europe suffit »</td><td data-edit="s04-b3">Examiner aussi le contrôle, les juridictions et l’exploitation.</td></tr>
+<tr><td data-edit="s04-a4">« L’open source garantit la maîtrise »</td><td data-edit="s04-b4">Vérifier la maintenance, les compétences et les prestataires.</td></tr>
+<tr><td data-edit="s04-a5">« Tout garder en interne »</td><td data-edit="s04-b5">Évaluer les moyens, la sécurité et la continuité nécessaires.</td></tr>
+</tbody></table>
+<p class="takeaway" data-edit="s04-take">Un service peut être sécurisé et conforme tout en étant très difficile à remplacer.</p>
+<footer class="foot"><span>Sources : V6, cadrage et § 4.1 ; V7 § 1.2. Repères pédagogiques.</span><span class="folio">04 / 22</span></footer>
+<aside class="speaker-notes">La sécurité protège les systèmes et les informations ; la conformité concerne le respect des obligations ; la résilience est la capacité à absorber une perturbation et à rétablir le service ; la souveraineté préserve la capacité de choisir et d’agir. Ces notions se complètent. Certains usages peuvent nécessiter des restrictions spécifiques.</aside>
+</section>
+
+<!-- === S05 : cinq axes, cinq pictogrammes, cinq risques concrets === -->
+<section class="slide" id="s05" data-title="Les différentes dimensions de la souveraineté numérique">
+<p class="kicker">01 · Comprendre</p><h2 data-edit="s05-title">Les différentes dimensions<br>de la souveraineté numérique</h2>
+<div class="body five axes">
+<div class="card reveal"><svg class="icon" aria-hidden="true"><use href="#i-data"/></svg><h3 data-edit="s05-h1">Données</h3><p data-edit="s05-p1">Qui peut accéder aux données, sous quel droit ?</p><p class="example" data-edit="s05-e1"><b>Exemple de risque</b>Accès imposé au fournisseur par une juridiction étrangère.</p></div>
+<div class="card reveal"><svg class="icon" aria-hidden="true"><use href="#i-tech"/></svg><h3 data-edit="s05-h2">Technique</h3><p data-edit="s05-p2">Peut-on faire évoluer ou déplacer le service ?</p><p class="example" data-edit="s05-e2"><b>Exemple de risque</b>Une interface propriétaire oblige à refaire les intégrations.</p></div>
+<div class="card reveal"><svg class="icon" aria-hidden="true"><use href="#i-money"/></svg><h3 data-edit="s05-h3">Économique</h3><p data-edit="s05-p3">Peut-on maîtriser les coûts et les conditions ?</p><p class="example" data-edit="s05-e3"><b>Exemple de risque</b>Hausse des licences alors que changer reste très coûteux.</p></div>
+<div class="card reveal"><svg class="icon" aria-hidden="true"><use href="#i-continuity"/></svg><h3 data-edit="s05-h4">Approvisionnement<br>et continuité</h3><p data-edit="s05-p4">Que faire si le service ou le support disparaît ?</p><p class="example" data-edit="s05-e4"><b>Exemple de risque</b>Fin de support d’une brique critique sans solution de repli.</p></div>
+<div class="card reveal"><svg class="icon" aria-hidden="true"><use href="#i-people"/></svg><h3 data-edit="s05-h5">Compétences<br>et organisation</h3><p data-edit="s05-p5">Sait-on piloter, maintenir et reprendre le service ?</p><p class="example" data-edit="s05-e5"><b>Exemple de risque</b>Le seul expert quitte le projet sans transmettre son savoir.</p></div>
+</div>
+<p class="takeaway" data-edit="s05-take">Les compétences traversent les cinq dimensions ; leur place dans la grille reste à discuter avec le GT6.</p>
+<footer class="foot"><span>Sources : V6 § 4.1.3 ; V7 § 1.3 ; fiche d’amélioration. Exemples illustratifs, pas des incidents régionaux établis.</span><span class="folio">05 / 22</span></footer>
+<aside class="speaker-notes">L’axe 1 est bien nommé « Données ». Le juridique reste traité dans la question et dans l’exemple. Ces cinq dimensions servent à lire les situations ; elles ne constituent pas encore une méthode de notation validée. L’exemple économique peut être rapproché du cas VMware/Broadcom sans chiffrer un impact chez Paradigm.</aside>
+</section>
+
+<!-- === S06 : cadre européen, distinction de statuts === -->
+<section class="slide" id="s06" data-title="Du cadre européen aux questions d’architecture">
+<p class="kicker">01 · Comprendre</p><h2 data-edit="s06-title">Du cadre européen<br>aux questions d’architecture</h2>
+<div class="three body"><div class="card reveal"><p class="label">Vérifier</p><h3 data-edit="s06-h1">Le droit applicable</h3><p data-edit="s06-p1">CADA : nom, statut, portée et calendrier à établir sur des sources officielles à jour.</p></div><div class="card reveal"><p class="label">Instruire</p><h3 data-edit="s06-h2">La note Move2Cloud</h3><p data-edit="s06-p2">Une analyse interne qui invite à examiner les risques, la segmentation et la réversibilité.</p></div><div class="card reveal"><p class="label">Traduire</p><h3 data-edit="s06-h3">Les choix de maîtrise</h3><p data-edit="s06-p3">Quelles exigences selon le service, les données, l’identité et les possibilités de sortie ?</p></div></div>
+<p class="takeaway" data-edit="s06-take">Les recommandations d’une note interne ne se confondent pas avec les obligations légales.</p>
+<footer class="foot"><span>Sources : V6 § 4.1.4 et § 5 ; V7 § 1.4. Présentation de l’angle d’analyse, pas d’affirmation juridique sur le CADA.</span><span class="folio">06 / 22</span></footer>
+<aside class="speaker-notes">Le statut juridique du CADA n’est pas établi par ce support. Aucun article, niveau d’assurance ni délai n’est repris comme obligation. Le propos présente les axes d’analyse de la note tels que décrits dans V6/V7. L’analyse des dépendances garde son utilité quel que soit le calendrier réglementaire.</aside>
+</section>
+
+<!-- === S07 : objectifs, séparés de l’organisation === -->
+<section class="slide" id="s07" data-title="Objectifs du chantier">
+<p class="kicker">02 · Situer le chantier</p><h2 data-edit="s07-title">Objectifs du chantier</h2><p class="sub" data-edit="s07-sub">Identifier, comprendre, maîtriser et réduire les dépendances numériques critiques de la Région.</p>
+<div class="body objectives"><div class="objective reveal"><span class="num">01</span><div><h3 data-edit="s07-h1">Établir le diagnostic</h3><p data-edit="s07-p1">Dépendances, risques et capacités régionales.</p></div></div><div class="objective reveal"><span class="num">02</span><div><h3 data-edit="s07-h2">Sensibiliser</h3><p data-edit="s07-p2">Une compréhension commune pour agir.</p></div></div><div class="objective reveal"><span class="num">03</span><div><h3 data-edit="s07-h3">Se connecter à l’écosystème</h3><p data-edit="s07-p3">Expertises, retours d’expérience et coopérations.</p></div></div><div class="objective reveal"><span class="num">04</span><div><h3 data-edit="s07-h4">Mener des projets concrets</h3><p data-edit="s07-p4">Tester des approches utiles aux services publics.</p></div></div></div>
+<p class="takeaway" data-edit="s07-take">Construire une capacité régionale d’action, au-delà de la production d’un rapport.</p>
+<footer class="foot"><span>Source : Objectifs et organisation du chantier 12. Portage : Paradigm.</span><span class="folio">07 / 22</span></footer>
+<aside class="speaker-notes">Les quatre objectifs reprennent le cadrage existant. Ils décrivent les finalités, pas des réalisations acquises. La slide suivante présente comment les groupes contribuent à ces objectifs.</aside>
+</section>
+
+<!-- === S08 : schéma de flux, GT d’expérimentation explicitement proposé === -->
+<section class="slide" id="s08" data-title="Organisation du chantier">
+<p class="kicker">02 · Situer le chantier</p><h2 data-edit="s08-title">Organisation du chantier</h2><p class="sub" data-edit="s08-sub">Des expériences individuelles à une mémoire collective, puis à des repères pour l’action.</p>
+<div class="org reveal">
+<svg class="org-wires" viewBox="0 0 1704 622" aria-hidden="true"><defs><marker id="arrow-org" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="m0 0 10 5-10 5Z" fill="#134F5C"/></marker></defs><g fill="none" stroke="currentColor" stroke-width="3"><path d="M350 49H405V222H457M350 164H405M350 279H405V222M350 394H405V279"/><path class="signal" marker-end="url(#arrow-org)" d="M820 222H925"/><path class="signal" marker-end="url(#arrow-org)" d="M1250 222H1353"/><path marker-end="url(#arrow-org)" d="M1090 362V442"/><path class="signal" marker-end="url(#arrow-org)" d="M930 592H425V446H640V424"/></g></svg>
+<div class="org-box org-input" style="top:0"><svg class="icon" aria-hidden="true"><use href="#i-people"/></svg><div><h3 data-edit="s08-gt3">GT3 · Terrain</h3><p data-edit="s08-p3">Entretiens, expériences</p></div></div>
+<div class="org-box org-input" style="top:115px"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><div><h3 data-edit="s08-gt4">GT4 · Benchmark</h3><p data-edit="s08-p4">Initiatives, solutions</p></div></div>
+<div class="org-box org-input" style="top:230px"><svg class="icon" aria-hidden="true"><use href="#i-world"/></svg><div><h3 data-edit="s08-gt5">GT5 · Écosystème</h3><p data-edit="s08-p5">Acteurs, coopérations</p></div></div>
+<div class="org-box org-input" style="top:345px"><svg class="icon" aria-hidden="true"><use href="#i-eval"/></svg><div><h3 data-edit="s08-gt6">GT6 · Évaluation</h3><p data-edit="s08-p6">Critères, méthodes</p></div></div>
+<div class="org-box org-core"><p class="label">GT2 · Connaissance</p><svg class="brain" role="img" aria-label="Cerveau collectif"><use href="#brain"/></svg><h3 data-edit="s08-core">La mémoire collective</h3><p data-edit="s08-capture">Capte · conserve · structure<br>Expériences, concepts, solutions</p></div>
+<div class="org-box org-analysis"><p class="label">GT1</p><h3 data-edit="s08-gt1">Analyse stratégique</h3><p data-edit="s08-synth">Croise et synthétise :<br>diagnostic, scénarios, repères.</p></div>
+<div class="org-box org-audience"><p class="label">GT7 · Diffusion</p><h3 data-edit="s08-audience">Les acteurs clés</h3><p data-edit="s08-users">Chefs de projets, développeurs, managers, direction, cabinet et administrations.</p></div>
+<div class="org-box org-tests"><p class="label" data-edit="s08-new-label">GT d’expérimentation · À créer</p><h3 data-edit="s08-new">Orchestrer des tests sur des projets opérationnels</h3><p data-edit="s08-new-p">Projets existants ou nouveaux ; mandat et porteurs à définir.</p></div>
+<p class="org-feedback" data-edit="s08-loop">Les retours des tests<br>enrichissent la mémoire.</p><p class="org-caption" data-edit="s08-caption">7 GT dans le cadrage actuel.<br>Un groupe supplémentaire proposé pour les tests.</p>
+</div>
+<footer class="foot"><span>Sources : organisation du chantier, GT1 à GT7 ; fiche d’amélioration pour le GT d’expérimentation à créer.</span><span class="folio">08 / 22</span></footer>
+<aside class="speaker-notes">Lire le schéma de gauche à droite. Les GT3 à GT6 alimentent le GT2. Le GT2 capte les expériences, conserve les sources et structure les concepts et solutions. Le GT1 en tire des synthèses pour les acteurs de l’organisation ; le GT7 en facilite la diffusion et l’appropriation. Le groupe d’expérimentation demandé dans la fiche d’amélioration est représenté en pointillés : il reste à créer, sans lui attribuer un numéro ou un mandat validé. Le retour d’expérience boucle vers le GT2.</aside>
+</section>
+
+<!-- === S09 : cerveau collectif, architecture actuelle et extension envisagée === -->
+<section class="slide" id="s09" data-title="Le cerveau collectif : une mémoire reliée">
+<p class="kicker">02 · Situer le chantier</p><h2 data-edit="s09-title">Le cerveau collectif : une mémoire reliée</h2><p class="sub" data-edit="s09-sub">Conserver les sources, relier les connaissances et rendre l’expérience réutilisable.</p>
+<div class="architecture"><div class="column reveal"><p class="label">01 · Alimenter →</p><h3 style="margin-top:23px" data-edit="s09-input-title">Les contributions</h3><ul class="list"><li data-edit="s09-input1">Entretiens et vécu métier</li><li data-edit="s09-input2">Rapports et veille</li><li data-edit="s09-input3">Analyses et retours de tests</li></ul></div><div class="vault reveal"><p class="label" style="color:#BDE1D9">02 · Relier →</p><h3 style="margin-top:23px" data-edit="s09-vault">Un corpus de fiches Markdown</h3><p class="small" data-edit="s09-vault-p">Obsidian : lecture, rédaction et liens entre les fiches.</p><div class="vault-grid"><div data-edit="s09-g1">Sources</div><div data-edit="s09-g2">Entretiens</div><div data-edit="s09-g3">Connaissances</div><div data-edit="s09-g4">Analyses</div><div data-edit="s09-g5">Région bruxelloise</div><div data-edit="s09-g6">Vie du chantier</div></div><p class="small" style="margin-top:23px" data-edit="s09-rules">Source · date · statut · liens · droits d’accès</p></div><div class="column reveal"><p class="label">03 · Réutiliser</p><h3 style="margin-top:23px" data-edit="s09-output">Des connaissances utiles</h3><p data-edit="s09-output-p">Rechercher, naviguer, comparer et produire des synthèses.</p><div class="future"><p class="label">Extension proposée</p><p data-edit="s09-ia">Interroger le corpus par une IA, avec réponses sourcées et validation humaine.</p></div></div></div>
+<p class="takeaway" data-edit="s09-take">Le corpus reste la référence ; l’IA est une couche d’assistance que l’on doit pouvoir remplacer.</p>
+<footer class="foot"><span>Sources : arborescence du vault ; contexte du projet ; mission du GT2 ; V7 § 2.2. Couche IA proposée, non attestée en production.</span><span class="folio">09 / 22</span></footer>
+<aside class="speaker-notes">La structure des six dossiers est observable dans le vault. Les règles affichées sont des exigences de contribution, pas la preuve que chaque fiche est complète. Les fiches techniques portant sur le cerveau collectif sont encore vides. Le schéma est donc fonctionnel : il ne prétend pas documenter une architecture technique déjà déployée. Le format Markdown facilite la portabilité du contenu ; il ne garantit ni la réversibilité du service complet ni la souveraineté de l’hébergement, de la synchronisation ou des modèles.</aside>
+</section>
+
+<!-- === S10 : projet 1, proposition d’expérimentation explicite === -->
+<section class="slide" id="s10" data-title="Projet 1 : un cerveau collectif souverain">
+<p class="kicker">02 · Situer le chantier</p><h2 data-edit="s10-title">Projet 1 du chantier :<br>un cerveau collectif souverain</h2><p class="sub" data-edit="s10-sub">Un projet proposé pour mettre nos principes à l’épreuve, brique par brique.</p>
+<div class="project-steps"><div class="card reveal"><div class="num">01</div><h3 data-edit="s10-h1">Cartographier</h3><p data-edit="s10-p1">Dépôt documentaire, synchronisation, recherche, modèles IA, hébergement et accès.</p></div><div class="card reveal"><div class="num">02</div><h3 data-edit="s10-h2">Comparer et choisir</h3><p data-edit="s10-p2">Évaluer les options, les usages, les coûts et les dépendances de chaque brique.</p></div><div class="card reveal"><div class="num">03</div><h3 data-edit="s10-h3">Implémenter un pilote</h3><p data-edit="s10-p3">Un corpus limité, des droits maîtrisés et une chaîne technique documentée.</p></div><div class="card reveal"><div class="num">04</div><h3 data-edit="s10-h4">Éprouver la maîtrise</h3><p data-edit="s10-p4">Restaurer, exporter, changer de modèle et faire reprendre le service par un autre collègue.</p></div></div>
+<div class="criteria"><span data-edit="s10-c1">Données<br><b>Accès et juridictions</b></span><span data-edit="s10-c2">Technique<br><b>Export et substitution</b></span><span data-edit="s10-c3">Économie<br><b>Coût total et sortie</b></span><span data-edit="s10-c4">Continuité<br><b>Reprise et repli</b></span><span data-edit="s10-c5">Compétences<br><b>Documentation et relève</b></span></div>
+<p class="takeaway" data-edit="s10-take">« Souverain » décrit l’ambition du projet ; le niveau de maîtrise devra être démontré sur les cinq axes.</p>
+<footer class="foot"><span>Sources : fiche d’amélioration ; mission GT2 ; V6/V7. Déroulé et tests proposés ; choix techniques, moyens et calendrier à définir.</span><span class="folio">10 / 22</span></footer>
+<aside class="speaker-notes">Le projet répond à la demande de la fiche d’amélioration. Les quatre étapes sont une proposition de mise en œuvre. Ajouter à la cartographie l’indexation, les sauvegardes, la journalisation, les licences et les composants externes éventuels. Une recherche augmentée par génération (RAG) est une option d’architecture, pas un choix acquis. Évaluer également la qualité des réponses, les citations, la confidentialité et le fonctionnement en cas d’indisponibilité du modèle. GT2 pour le besoin et le corpus ; GT6 pour les critères ; groupe d’expérimentation à créer pour les tests : articulation proposée à confirmer. Aucun fournisseur, budget ou déploiement n’est présenté comme décidé.</aside>
+</section>
+
+<!-- === S11 : avancement sans inventer de réalisation ou de pourcentage === -->
+<section class="slide" id="s11" data-title="Un socle documentaire, un bilan à consolider">
+<p class="kicker">02 · Situer le chantier</p><h2 data-edit="s11-title">Un socle documentaire,<br>un bilan à consolider</h2>
+<div class="three body"><div class="card state-card reveal"><p class="label">Disponible dans le corpus</p><h3 data-edit="s11-h1">Des matériaux de travail</h3><p data-edit="s11-p1">Fiches et sources, cadrage des GT, documents d’analyse et pistes de benchmark.</p><p class="small muted" data-edit="s11-n1">Disponibilité d’un document ≠ validation de son contenu.</p></div><div class="card state-card reveal"><p class="label">À confirmer avec les GT</p><h3 data-edit="s11-h2">L’avancement réel</h3><p data-edit="s11-p2">Réalisations, apports, dates et travaux restants pour les quatre objectifs.</p><p class="small muted" data-edit="s11-n2">Les tableaux d’avancement V6/V7 restent à compléter.</p></div><div class="card state-card reveal"><p class="label">À instruire et tester</p><h3 data-edit="s11-h3">La mise à l’épreuve</h3><p data-edit="s11-p3">Méthode GT6, IA sur le corpus et tests sur des projets opérationnels.</p><p class="small muted" data-edit="s11-n3">Aucun déploiement confirmé par les documents consultés.</p></div></div>
+<p class="takeaway" data-edit="s11-take">Le point d’étape distingue les matériaux disponibles, les analyses proposées et les résultats validés.</p>
+<footer class="foot"><span>Sources : vault consulté le 16/09/2026 ; V6 § 4.2 ; V7 § 2.3. Pas de bilan daté confirmé par les GT.</span><span class="folio">11 / 22</span></footer>
+<aside class="speaker-notes">Cette slide répond honnêtement à la question de l’avancement : les documents sont disponibles mais ne remplacent pas un bilan des responsables de GT. Avant actualisation, obtenir pour chaque objectif le réalisé, l’apport obtenu, la source datée, le statut et le restant. Clarifier aussi le lien entre les livrables annoncés fin août et ce point de septembre, sans en déduire automatiquement un retard.</aside>
+</section>
+
+<!-- === S12 : analyse fournisseurs, statistiques candidates retirées du visuel === -->
+<section class="slide" id="s12" data-title="Passer de l’inventaire au risque métier">
+<p class="kicker">03 · Premiers enseignements</p><h2 data-edit="s12-title">Passer de l’inventaire au risque métier</h2><p class="sub" data-edit="s12-sub">La nationalité d’un fournisseur ne mesure pas, à elle seule, notre dépendance.</p>
+<div class="body chain"><div class="card reveal"><p class="label">Inventaire</p><h3 data-edit="s12-h1">Qui fournit quoi ?</h3><p data-edit="s12-p1">Fournisseurs, produits, contrats et juridictions.</p></div><div class="card reveal"><p class="label">Usages</p><h3 data-edit="s12-h2">À quoi cela sert-il ?</h3><p data-edit="s12-p2">Applications, données, identités et missions publiques.</p></div><div class="card reveal"><p class="label">Risque et maîtrise</p><h3 data-edit="s12-h3">Que peut-on faire ?</h3><p data-edit="s12-p3">Conséquences, solutions de repli, coûts et délais de sortie.</p></div></div>
+<div class="strip" data-edit="s12-status">Analyse fournisseurs Paradigm : fichier source, catégories et dénominateurs à retrouver avant publication des chiffres.</div>
+<p class="takeaway" data-edit="s12-take">Un comptage n’est ni une mesure des dépenses, ni des usages, ni de la criticité.</p>
+<footer class="foot"><span>Sources : V6 § 4.3.1 et § 5 ; V7 § 3.1. Périmètre de l’analyse envisagée : Paradigm, pas toute la Région.</span><span class="folio">12 / 22</span></footer>
+<aside class="speaker-notes">Les nombres 137, 42 %, 26 %, 65 % et 88 % présents dans la V1 et les anciens plans ne sont pas repris comme résultats : les V6/V7 demandent de retrouver l’analyse primaire avant utilisation. Vérifier la date, les catégories cloud et IA, les doublons et les dénominateurs. Même validés, ces chiffres resteraient un indicateur d’exposition. La cartographie doit aussi couvrir les autres administrations, les dépendances communes et les solutions sans alternative crédible.</aside>
+</section>
+
+<!-- === S13 : cas à instruire, grille commune === -->
+<section class="slide" id="s13" data-title="Trois situations, trois enquêtes différentes">
+<p class="kicker">03 · Premiers enseignements</p><h2 data-edit="s13-title">Trois situations,<br>trois enquêtes différentes</h2>
+<div class="three body"><div class="card case reveal"><h3 data-edit="s13-h1">VMware / Broadcom</h3><p data-edit="s13-a1"><span class="label">Dépendance à examiner</span>Licences et écosystème technique.</p><p data-edit="s13-b1"><span class="label">Conséquence possible</span>Une hausse difficile à absorber ou une migration coûteuse.</p><p data-edit="s13-c1"><span class="label">Preuve à recueillir</span>Contrat, renouvellement, coût et faisabilité d’une alternative.</p></div><div class="card case reveal"><h3 data-edit="s13-h2">Microsoft 365</h3><p data-edit="s13-a2"><span class="label">Dépendance à examiner</span>Données, identité et intégrations.</p><p data-edit="s13-b2"><span class="label">Conséquence possible</span>Une sortie qui touche plusieurs services en même temps.</p><p data-edit="s13-c2"><span class="label">Preuve à recueillir</span>Usages, architecture d’identité et test de reprise du service.</p></div><div class="card case reveal"><h3 data-edit="s13-h3">Une application métier</h3><p data-edit="s13-a3"><span class="label">Dépendance à examiner</span>Le savoir détenu par un seul acteur.</p><p data-edit="s13-b3"><span class="label">Conséquence possible</span>Un service difficile à reprendre malgré l’accès au code.</p><p data-edit="s13-c3"><span class="label">Preuve à recueillir</span>Documentation, transfert de connaissances et relève.</p></div></div>
+<p class="takeaway" data-edit="s13-take">Même grille, réponses différentes : service → dépendance → conséquence → maîtrise → inconnues.</p>
+<footer class="foot"><span>Sources : V6 § 4.3.2 ; V7 § 3.2 et § 3.4. Cas candidats et situation illustrative ; pas d’impact régional chiffré établi.</span><span class="folio">13 / 22</span></footer>
+<aside class="speaker-notes">Les deux fournisseurs sont des cas proposés dans les plans, pas des diagnostics entièrement établis. Le troisième cas est volontairement générique ; il ne reprend pas la situation identifiable d’un entretien. Pour documenter chaque cas, préciser la mission concernée, la maîtrise actuelle, l’écart au besoin et les preuves manquantes. Aucune hausse de licence ni durée de blocage n’est présentée comme un fait local confirmé.</aside>
+</section>
+
+<!-- === S14 : compétences, lien direct avec le cerveau collectif === -->
+<section class="slide" id="s14" data-title="La capacité de reprise dépend aussi des personnes">
+<p class="kicker">03 · Premiers enseignements</p><h2 data-edit="s14-title">La capacité de reprise<br>dépend aussi des personnes</h2>
+<div class="three body"><div class="card reveal"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><h3 data-edit="s14-h1">Comprendre</h3><p data-edit="s14-p1">Conserver la connaissance des systèmes, des métiers et des choix passés.</p></div><div class="card reveal"><svg class="icon" aria-hidden="true"><use href="#i-people"/></svg><h3 data-edit="s14-h2">Transmettre</h3><p data-edit="s14-p2">Documenter, former et préparer la relève des personnes clés.</p></div><div class="card reveal"><svg class="icon" aria-hidden="true"><use href="#i-continuity"/></svg><h3 data-edit="s14-h3">Reprendre</h3><p data-edit="s14-p3">Vérifier qu’une autre équipe sait exploiter et faire évoluer le service.</p></div></div>
+<div class="strip" data-edit="s14-link">Le cerveau collectif conserve le savoir explicite ; la pratique et la formation permettent de le mobiliser.</div>
+<p class="takeaway" data-edit="s14-take">Externaliser une activité suppose de conserver la capacité de la comprendre et de la piloter.</p>
+<footer class="foot"><span>Sources : V6 § 4.3.4 ; V7 § 3.4. Enseignement proposé à consolider à partir des entretiens.</span><span class="folio">14 / 22</span></footer>
+<aside class="speaker-notes">Les compétences constituent une dépendance critique et transversale. V6 demande d’éviter de les qualifier sans attribution de « première dépendance ». Aucun quota d’internalisation ni ratio de consultants n’est proposé. Le test de reprise complète la présence de documentation : une base de fiches ne remplace pas la compétence opérationnelle.</aside>
+</section>
+
+<!-- === S15 : actifs régionaux, sans qualification automatique de souveraineté === -->
+<section class="slide" id="s15" data-title="La Région dispose de points d’appui">
+<p class="kicker">03 · Premiers enseignements</p><h2 data-edit="s15-title">La Région dispose de points d’appui</h2>
+<div class="body cols" style="grid-template-columns:1.35fr 1fr"><div class="reveal"><div class="asset-layer"><h3 data-edit="s15-h1">Infrastructures</h3><p data-edit="s15-p1">Datacenter régional, hébergement et IrisNet.</p></div><div class="asset-layer"><h3 data-edit="s15-h2">Applications</h3><p data-edit="s15-p2">IRISbox, FixMyStreet, iCatalog, SWR : maîtrise à préciser pour chacune.</p></div><div class="asset-layer"><h3 data-edit="s15-h3">Capacités</h3><p data-edit="s15-p3">Compétences, connaissance des métiers et mutualisations.</p></div></div><div class="contrast reveal"><h3 data-edit="s15-question">La question à instruire</h3><p data-edit="s15-contrast">Quelle maîtrise des couches logicielles et cloud au-dessus des infrastructures régionales ?</p><p class="small" style="margin-top:26px" data-edit="s15-status">Un angle d’analyse, pas un diagnostic régional déjà consolidé.</p></div></div>
+<p class="takeaway" data-edit="s15-take">Disposer d’un actif ne suffit pas : il faut savoir l’exploiter, le maintenir et assurer sa continuité.</p>
+<footer class="foot"><span>Sources : contexte du projet ; V6 § 4.3.3 ; V7 § 3.3. Points d’appui à évaluer, sans score de souveraineté.</span><span class="folio">15 / 22</span></footer>
+<aside class="speaker-notes">Éviter de déduire la maîtrise d’un service de sa seule propriété ou de sa localisation. Évaluer aussi les licences, les contrats, l’exploitation, les compétences, le financement et les possibilités d’évolution. Le contraste entre infrastructures régionales et couches logicielles dépendantes reste une question à documenter. Les chiffres détaillés du datacenter ne sont pas repris.</aside>
+</section>
+
+<!-- === S16 : IA, dépendances et pistes === -->
+<section class="slide" id="s16" data-title="L’IA : des dépendances à anticiper">
+<p class="kicker">03 · Premiers enseignements</p><h2 data-edit="s16-title">L’IA : des dépendances à anticiper</h2>
+<div class="body cols compare"><div class="card reveal"><p class="label">Ce qui peut nous lier</p><ul class="list"><li data-edit="s16-r1">Les données et les outils du quotidien.</li><li data-edit="s16-r2">Les modèles, leurs interfaces et leurs conditions commerciales.</li><li data-edit="s16-r3">Les usages métier devenus difficiles à déplacer.</li></ul></div><div class="card reveal"><p class="label teal">Les options à examiner</p><ul class="list"><li data-edit="s16-o1">Des modèles ouverts et remplaçables.</li><li data-edit="s16-o2">Des infrastructures et compétences mutualisées.</li><li data-edit="s16-o3">Un pilote sur le cerveau collectif pour comparer les options.</li></ul></div></div>
+<p class="takeaway" data-edit="s16-take">La localisation du modèle ne suffit pas : évaluer toute la chaîne, du document à la réponse.</p>
+<footer class="foot"><span>Sources : V6 § 4.3.5 ; V7 § 3.5 ; fiche d’amélioration. Options à instruire, pas de projet d’IA régionale décidé.</span><span class="folio">16 / 22</span></footer>
+<aside class="speaker-notes">Les usages réels et autorisés restent à documenter avec les équipes et les ambassadeurs IA. Comparer qualité, confidentialité, coût total, compétences et portabilité. Les variations de prix sont des scénarios à examiner, pas des hausses futures établies. Aucun taux d’usage ou montant d’investissement issu d’un témoignage n’est repris.</aside>
+</section>
+
+<!-- === S17 : benchmark réintroduit, expériences candidates et questions de transposition === -->
+<section class="slide" id="s17" data-title="Le benchmark fournit des questions utiles">
+<p class="kicker">03 · Apprendre des autres</p><h2 data-edit="s17-title">Le benchmark fournit des questions utiles</h2><p class="sub" data-edit="s17-sub">Trois expériences candidates à documenter avant d’en tirer des conclusions pour Bruxelles.</p>
+<div class="body three bench"><div class="card reveal"><p class="label">Accompagner</p><h3 data-edit="s17-h1">Schleswig-Holstein</h3><p data-edit="s17-p1">Transition des outils de travail.</p><p class="question" data-edit="s17-q1">Comment accompagner les utilisateurs et les intégrations ?</p></div><div class="card reveal"><p class="label">Progresser par étapes</p><h3 data-edit="s17-h2">Gendarmerie française<br>GendBuntu</h3><p data-edit="s17-p2">Migration progressive.</p><p class="question" data-edit="s17-q2">Comment articuler pilotes, compétences et renouvellements ?</p></div><div class="card reveal"><p class="label">Coopérer</p><h3 data-edit="s17-h3">La Suite numérique</h3><p data-edit="s17-p3">Mutualisation entre administrations.</p><p class="question" data-edit="s17-q3">Quelles briques et capacités peut-on réellement partager ?</p></div></div>
+<p class="takeaway" data-edit="s17-take">Comparer les réalisations, les coûts, les difficultés et les résultats ; une annonce n’est pas une preuve de réussite.</p>
+<footer class="foot"><span>Sources : benchmark GT4, matériau de départ ; V7 § 4. Références primaires et résultats à compléter.</span><span class="folio">17 / 22</span></footer>
+<aside class="speaker-notes">Les trois exemples sont la sélection candidate de V7. La fiche GT4 demande elle-même de vérifier les sources et les conditions de mise en œuvre. Cette slide présente donc des angles d’enquête, pas des succès acquis. Chercher aussi les difficultés : personnalisations excessives, interopérabilité, changement sous-estimé et rupture de soutien. Le rapport Solvay est un matériau de départ, pas une validation du chantier.</aside>
+</section>
+
+<!-- === S18 : leviers et conditions, sans répétition des principes === -->
+<section class="slide" id="s18" data-title="Cinq leviers, toujours sous conditions">
+<p class="kicker">04 · Éclairer le TOM IT d’Atlas</p><h2 data-edit="s18-title">Cinq leviers, toujours sous conditions</h2>
+<table class="matrix three-col body reveal"><thead><tr><th>Levier</th><th>Gain recherché</th><th>Condition de mise en œuvre</th></tr></thead><tbody>
+<tr><td data-edit="s18-a1">Approche différenciée</td><td data-edit="s18-b1">Prioriser les efforts.</td><td data-edit="s18-c1">Distinguer criticité, maîtrise actuelle et maîtrise requise.</td></tr>
+<tr><td data-edit="s18-a2">Diversification</td><td data-edit="s18-b2">Garder des options.</td><td data-edit="s18-c2">Vérifier l’indépendance réelle des alternatives.</td></tr>
+<tr><td data-edit="s18-a3">Marchés publics</td><td data-edit="s18-b3">Agir avant le choix.</td><td data-edit="s18-c3">Savoir spécifier, évaluer et vérifier les engagements.</td></tr>
+<tr><td data-edit="s18-a4">Compétences</td><td data-edit="s18-b4">Conserver le pilotage.</td><td data-edit="s18-c4">Documenter, transmettre, former et prévoir la relève.</td></tr>
+<tr><td data-edit="s18-a5">Open source et communs</td><td data-edit="s18-b5">Auditer, adapter, partager.</td><td data-edit="s18-c5">Vérifier maintenance, gouvernance et prestataires.</td></tr>
+</tbody></table>
+<p class="takeaway" data-edit="s18-take">Réversibilité, coopération et accompagnement du changement traversent les cinq leviers.</p>
+<footer class="foot"><span>Sources : V6 § 4.5 ; V7 § 5.2. Leviers proposés à la discussion collective.</span><span class="folio">18 / 22</span></footer>
+<aside class="speaker-notes">Plusieurs fournisseurs peuvent partager le même cloud ou système d’identité. La mutualisation peut réduire des coûts tout en concentrant une fragilité. La réversibilité doit être testée au niveau du service complet : données, identités, configurations, intégrations et compétences. Aucun levier ne garantit automatiquement la souveraineté.</aside>
+</section>
+
+<!-- === S19 : traduction concrète dans les dimensions du TOM IT === -->
+<section class="slide" id="s19" data-title="Cinq questions à intégrer au TOM IT">
+<p class="kicker">04 · Éclairer le TOM IT d’Atlas</p><h2 data-edit="s19-title">Cinq questions à intégrer au TOM IT</h2>
+<table class="matrix body reveal"><thead><tr><th>Domaine</th><th>Question à instruire</th></tr></thead><tbody>
+<tr><td data-edit="s19-a1">Architecture</td><td data-edit="s19-b1">Comment évaluer les dépendances dès la conception, notamment celles liées à l’identité ?</td></tr>
+<tr><td data-edit="s19-a2">Achats et contrats</td><td data-edit="s19-b2">Qu’exiger sur les données, le transfert de savoir et l’assistance à la sortie ?</td></tr>
+<tr><td data-edit="s19-a3">Compétences et exploitation</td><td data-edit="s19-b3">Quelles capacités conserver ou partager, et comment assurer leur continuité ?</td></tr>
+<tr><td data-edit="s19-a4">Gouvernance</td><td data-edit="s19-b4">Qui actualise les dépendances, suit les risques et organise leur réexamen ?</td></tr>
+<tr><td data-edit="s19-a5">Mutualisation</td><td data-edit="s19-b5">Quelles capacités partager, et quelles fragilités communes éviter ?</td></tr>
+</tbody></table>
+<p class="takeaway" data-edit="s19-take">La transformation Atlas est l’occasion de traiter ensemble architecture, achats, compétences et gouvernance.</p>
+<footer class="foot"><span>Sources : V6 § 4.5 ; V7 § 5.3. Questions proposées, sans préjuger de l’organisation cible.</span><span class="folio">19 / 22</span></footer>
+<aside class="speaker-notes">Cette slide est le point de bascule vers l’utilité du chantier pour Atlas. Le TOM IT doit pouvoir rendre ces capacités explicites, sans que le présent support impose une structure d’équipe, une plateforme ou une répartition interne-externe. Ces questions peuvent être appliquées à Move2Cloud indépendamment des vérifications juridiques du CADA.</aside>
+</section>
+
+<!-- === S20 : cycle de gestion, méthode à tester === -->
+<section class="slide" id="s20" data-title="Installer une démarche suivie">
+<p class="kicker">04 · Éclairer le TOM IT d’Atlas</p><h2 data-edit="s20-title">Installer une démarche suivie</h2><p class="sub" data-edit="s20-sub">Un cycle proposé, à outiller avec le GT6 et à tester sur quelques cas.</p>
+<div class="process"><div class="card reveal"><div class="num">01</div><h3 data-edit="s20-h1">Identifier</h3><p data-edit="s20-p1">Services, acteurs et dépendances.</p></div><div class="card reveal"><div class="num">02</div><h3 data-edit="s20-h2">Qualifier</h3><p data-edit="s20-p2">Conséquences et preuves de maîtrise.</p></div><div class="card reveal"><div class="num">03</div><h3 data-edit="s20-h3">Prioriser</h3><p data-edit="s20-p3">Écarts et contraintes de transition.</p></div><div class="card reveal"><div class="num">04</div><h3 data-edit="s20-h4">Traiter</h3><p data-edit="s20-p4">Renforcer, limiter, préparer une sortie ou accepter.</p></div><div class="card reveal"><div class="num">05</div><h3 data-edit="s20-h5">Suivre</h3><p data-edit="s20-p5">Responsables, échéances et réexamen.</p></div></div>
+<div class="distinctions"><div data-edit="s20-d1"><b>Criticité</b><br>Ce que l’interruption coûterait aux missions.</div><div data-edit="s20-d2"><b>Maîtrise actuelle</b><br>Ce que l’on sait effectivement faire.</div><div data-edit="s20-d3"><b>Maîtrise requise</b><br>Ce que les missions et les obligations exigent.</div></div>
+<p class="takeaway" data-edit="s20-take">Piste de suivi : un registre des dépendances critiques, avec preuves et responsables identifiés.</p>
+<footer class="foot"><span>Sources : V6 § 4.5–6 ; V7 § 5.4. Cycle proposé ; aucune formule de score présentée comme validée.</span><span class="folio">20 / 22</span></footer>
+<aside class="speaker-notes">Les traitements peuvent renforcer les garanties, limiter les usages, réduire les couplages, préparer une sortie, remplacer une solution ou accepter explicitement un risque résiduel compatible avec les obligations légales. Comparer toute option au maintien de la situation actuelle : bénéfices, coûts, délais, sécurité, fonctionnalités et charge des équipes. Prévoir le retour vers l’identification lorsque les usages ou les contrats changent.</aside>
+</section>
+
+<!-- === S21 : horizon réaliste, décembre et suite === -->
+<section class="slide" id="s21" data-title="Septembre, décembre et au-delà">
+<p class="kicker">05 · Préparer la suite</p><h2 data-edit="s21-title">Septembre, décembre et au-delà</h2>
+<div class="three timeline"><div class="card reveal"><p class="label">Septembre · Partager</p><h3 data-edit="s21-h1">Un point d’étape</h3><p data-edit="s21-p1">Clarifier le sujet et expliciter les premiers repères.</p><p data-edit="s21-p2">Identifier les lacunes, les sources et les validations attendues.</p></div><div class="card reveal"><p class="label">D’ici décembre · Consolider</p><h3 data-edit="s21-h2">Un diagnostic délimité</h3><p data-edit="s21-p3">Confronter les analyses, vérifier le benchmark et préciser la méthode.</p><p data-edit="s21-p4">Instruire quelques tests et des scénarios réalistes.</p></div><div class="card reveal"><p class="label">Au-delà · Poursuivre</p><h3 data-edit="s21-h3">Une capacité durable</h3><p data-edit="s21-p5">Élargir la couverture, améliorer la méthode et capitaliser les tests.</p><p data-edit="s21-p6">Organiser la coopération et le suivi des dépendances.</p></div></div>
+<p class="takeaway" data-edit="s21-take">Décembre : un rapport consolidé sur un périmètre explicite, avec des suites réalistes et des questions ouvertes.</p>
+<footer class="foot"><span>Sources : jalon de décembre du cadrage ; V6 § 4.6 ; V7 § 6. Travaux, porteurs et échéances détaillées à confirmer.</span><span class="folio">21 / 22</span></footer>
+<aside class="speaker-notes">Le rapport de décembre cherchera une compréhension commune, un diagnostic consolidé, un cadre de lecture, des principes et scénarios avec leurs conditions de faisabilité. Il ne promet pas une cartographie exhaustive de la Région, l’évaluation de chaque solution, une méthode entièrement validée ou un plan complet de migration. Le bilan des GT reste nécessaire pour préciser ce qui est réaliste d’ici décembre.</aside>
+</section>
+
+<!-- === S22 : conclusion, trois messages === -->
+<section class="slide dark" id="s22" data-title="Préserver notre capacité de choix">
+<p class="kicker">Conclusion</p><h2 data-edit="s22-title">Préserver notre capacité de choix.</h2>
+<div class="closing"><div class="closing-item reveal"><span class="num">01</span><p data-edit="s22-p1">Connaître nos dépendances pour préserver la décision, l’action et la continuité.</p></div><div class="closing-item reveal"><span class="num">02</span><p data-edit="s22-p2">Relier les savoirs dans un cerveau collectif et transformer les analyses en tests utiles.</p></div><div class="closing-item reveal"><span class="num">03</span><p data-edit="s22-p3">Éclairer le TOM IT d’Atlas et poursuivre une démarche collective après décembre.</p></div></div>
+<svg class="closing-art" viewBox="0 0 300 280" aria-hidden="true"><use href="#brain"/></svg>
+<p class="takeaway" data-edit="s22-take">Connaître → maîtriser → arbitrer → apprendre.</p>
+<footer class="foot"><span>Chantier 12 · Support de discussion · Sources et espaces de modification dans la fiche Obsidian associée.</span><span class="folio">22 / 22</span></footer>
+<aside class="speaker-notes">Conclure sans demande de décision. Inviter les participants à enrichir les sources, corriger les formulations et documenter les réalisations des GT. La fiche Obsidian associée comporte les contenus, les intentions visuelles, les précautions factuelles et un espace de modification pour chaque identifiant de slide.</aside>
+</section>
+</main></div>
+
+<!-- === COMMANDES : conservées dans chaque copie exportée === -->
+<nav class="deck-controls" aria-label="Navigation de la présentation"><button id="prev" aria-label="Slide précédente" title="Précédente (←)">←</button><span id="counter" aria-live="polite">01 / 22</span><button id="next" aria-label="Slide suivante" title="Suivante (→)">→</button><select id="jump" aria-label="Sommaire des slides"></select><button id="notesButton" title="Notes et sources (N)">Notes</button><button id="fullButton" title="Plein écran (F)" aria-label="Plein écran">⛶</button></nav>
+<div class="edit-tools"><button id="editToggle" aria-pressed="false" title="Éditer les textes (E)">Éditer</button><button class="only-edit" id="saveButton">Exporter HTML</button><button class="only-edit" id="resetButton">Annuler les retouches</button></div>
+<div id="toast" role="status"></div>
+<dialog id="notesDialog" aria-labelledby="notesTitle"><button id="closeNotes" aria-label="Fermer les notes">✕</button><h2 id="notesTitle"></h2><div id="notesContent"></div></dialog>
+<noscript><p style="position:fixed;bottom:15px;background:white;color:#152335;padding:15px;z-index:2000;font-size:18px">Activez JavaScript pour naviguer dans les slides. L’impression permet de lire l’ensemble du support.</p></noscript>
+<script>
+/* === PRÉSENTATEUR : mise à l’échelle uniforme, navigation et liens #sXX === */
+class SlidePresentation {
+  constructor() {
+    this.slides = [...document.querySelectorAll('.slide')];
+    this.stage = document.getElementById('deckStage');
+    this.index = 0;
+    this.dialog = document.getElementById('notesDialog');
+    this.jump = document.getElementById('jump');
+    this.jump.replaceChildren();
+    this.slides.forEach((s,i) => { const o=document.createElement('option'); o.value=i; o.textContent=`${String(i+1).padStart(2,'0')} · ${s.dataset.title}`; this.jump.append(o); });
+    this.jump.addEventListener('change',()=>this.showSlide(Number(this.jump.value)));
+    document.getElementById('prev').onclick=()=>this.showSlide(this.index-1);
+    document.getElementById('next').onclick=()=>this.showSlide(this.index+1);
+    document.getElementById('notesButton').onclick=()=>this.notes();
+    document.getElementById('closeNotes').onclick=()=>this.dialog.close();
+    document.getElementById('fullButton').onclick=()=>this.fullscreen();
+    window.addEventListener('resize',()=>this.scale());
+    window.addEventListener('hashchange',()=>this.fromHash());
+    this.setupKeyboardNav(); this.setupWheelNav(); this.setupTouchNav();
+    this.scale(); this.fromHash();
+  }
+  scale() {
+    // Reserve 64 screen pixels for navigation so it never covers slide sources.
+    const availableHeight=Math.max(1,innerHeight-64);
+    const f=Math.min(innerWidth/1920,availableHeight/1080);
+    this.stage.style.transform=`translate(${(innerWidth-1920*f)/2}px,${(availableHeight-1080*f)/2}px) scale(${f})`;
+  }
+  fromHash() { const i=this.slides.findIndex(s=>`#${s.id}`===location.hash); this.showSlide(i<0?0:i); }
+  showSlide(i) {
+    this.index=Math.max(0,Math.min(i,this.slides.length-1));
+    this.slides.forEach((s,n)=>{ const active=n===this.index; s.classList.toggle('active',active); s.classList.toggle('visible',active); s.setAttribute('aria-hidden',String(!active)); s.inert=!active; });
+    document.getElementById('counter').textContent=`${String(this.index+1).padStart(2,'0')} / ${this.slides.length}`;
+    document.getElementById('prev').disabled=this.index===0;
+    document.getElementById('next').disabled=this.index===this.slides.length-1;
+    this.jump.value=this.index;
+    try { history.replaceState(null,'',`#${this.slides[this.index].id}`); } catch (_) { /* Navigation remains available on restricted file origins. */ }
+  }
+  setupKeyboardNav() {
+    document.addEventListener('keydown',e=>{
+      if (this.dialog.open || e.target.isContentEditable || /INPUT|TEXTAREA|SELECT|BUTTON/.test(e.target.tagName) || e.ctrlKey || e.metaKey || e.altKey) return;
+      if (['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)) { e.preventDefault(); this.showSlide(this.index+1); }
+      if (['ArrowLeft','ArrowUp','PageUp'].includes(e.key)) { e.preventDefault(); this.showSlide(this.index-1); }
+      if (e.key==='Home') { e.preventDefault(); this.showSlide(0); }
+      if (e.key==='End') { e.preventDefault(); this.showSlide(this.slides.length-1); }
+      if (e.key.toLowerCase()==='n') this.notes();
+      if (e.key.toLowerCase()==='f') this.fullscreen();
+    });
+  }
+  setupWheelNav() {
+    let nextTime=0;
+    document.querySelector('.deck-viewport').addEventListener('wheel',e=>{
+      if (document.body.classList.contains('editing') || this.dialog.open || e.ctrlKey || Math.abs(e.deltaY)<35 || Date.now()<nextTime) return;
+      nextTime=Date.now()+750; this.showSlide(this.index+Math.sign(e.deltaY));
+    },{passive:true});
+  }
+  setupTouchNav() {
+    let start=null;
+    this.stage.addEventListener('touchstart',e=>{ start=e.touches.length===1?[e.touches[0].clientX,e.touches[0].clientY]:null; },{passive:true});
+    this.stage.addEventListener('touchend',e=>{
+      if (!start || document.body.classList.contains('editing') || this.dialog.open) { start=null; return; }
+      const dx=e.changedTouches[0].clientX-start[0],dy=e.changedTouches[0].clientY-start[1]; start=null;
+      if (Math.abs(dx)>55 && Math.abs(dx)>Math.abs(dy)) this.showSlide(this.index+(dx<0?1:-1));
+    },{passive:true});
+    this.stage.addEventListener('touchcancel',()=>{start=null;},{passive:true});
+  }
+  notes() {
+    const s=this.slides[this.index];
+    document.getElementById('notesTitle').textContent=`${this.index+1}. ${s.querySelector('h1,h2').textContent}`;
+    const text=document.createElement('p'); text.textContent=s.querySelector('.speaker-notes').textContent;
+    const source=document.createElement('p'); source.className='note-source'; source.textContent=s.querySelector('.foot span').textContent;
+    document.getElementById('notesContent').replaceChildren(text,source);
+    this.dialog.showModal();
+  }
+  async fullscreen() {
+    try { if(document.fullscreenElement) await document.exitFullscreen(); else await document.documentElement.requestFullscreen(); }
+    catch (_) { notify('Plein écran indisponible dans ce navigateur.'); }
+  }
+}
+/* === ÉDITION : texte brut, brouillon local et export autonome réouvrable === */
+let toastTimer;
+function notify(message) { const toast=document.getElementById('toast'); toast.textContent=message; clearTimeout(toastTimer); toastTimer=setTimeout(()=>toast.textContent='',4200); }
+class InlineEditor {
+  constructor() {
+    this.fields=[...document.querySelectorAll('[data-edit]')];
+    this.baseline=new Map(this.fields.map(e=>[e.dataset.edit,e.innerHTML]));
+    this.active=false; this.edits={}; this.storageAvailable=true;
+    // Each exported revision gets a new storage key, preventing an older draft from overwriting it.
+    this.revision=document.documentElement.dataset.revision || '2026-09-16-v2';
+    this.key=`chantier12-presentation-${this.revision}`;
+    try { const saved=JSON.parse(localStorage.getItem(this.key)||'{}'); if(saved && typeof saved==='object' && !Array.isArray(saved)) this.edits=saved; }
+    catch (_) { this.storageAvailable=false; }
+    this.fields.forEach(el=>{
+      const val=this.edits[el.dataset.edit]; if(typeof val==='string') el.textContent=val;
+      el.addEventListener('input',()=>{ this.edits[el.dataset.edit]=el.innerText; this.saveDraft(); this.checkFit(el); });
+      el.addEventListener('paste',e=>{
+        e.preventDefault(); const text=e.clipboardData.getData('text/plain'); const sel=window.getSelection();
+        if(!sel.rangeCount) return; const range=sel.getRangeAt(0); if(!el.contains(range.commonAncestorContainer)) return;
+        range.deleteContents(); const node=document.createTextNode(text); range.insertNode(node); range.setStartAfter(node); range.collapse(true); sel.removeAllRanges(); sel.addRange(range); el.dispatchEvent(new Event('input',{bubbles:true}));
+      });
+    });
+    document.getElementById('editToggle').onclick=()=>this.toggle();
+    document.getElementById('saveButton').onclick=()=>this.exportFile();
+    document.getElementById('resetButton').onclick=()=>this.reset();
+    document.addEventListener('keydown',e=>{
+      if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s') { e.preventDefault(); this.exportFile(); return; }
+      if(e.key==='Escape' && this.active && !document.querySelector('dialog[open]')) { document.activeElement.blur(); this.toggle(false); return; }
+      if(e.target.isContentEditable || /INPUT|TEXTAREA|SELECT|BUTTON/.test(e.target.tagName) || document.querySelector('dialog[open]') || e.ctrlKey || e.metaKey || e.altKey) return;
+      if(e.key.toLowerCase()==='e') this.toggle();
+    });
+    if(Object.keys(this.edits).length) notify('Brouillon local restauré. Exportez le HTML pour conserver un fichier partageable.');
+  }
+  toggle(value=!this.active) {
+    this.active=value; document.body.classList.toggle('editing',value);
+    this.fields.forEach(el=>{ if(value) { el.setAttribute('contenteditable','true'); el.setAttribute('spellcheck','true'); } else { el.removeAttribute('contenteditable'); el.removeAttribute('spellcheck'); } });
+    const b=document.getElementById('editToggle'); b.textContent=value?'Terminer l’édition':'Éditer'; b.setAttribute('aria-pressed',String(value));
+    if(value) notify('Cliquez un texte pour le modifier. Échap pour terminer. Cmd/Ctrl+S exporte le fichier.');
+  }
+  saveDraft() {
+    try { localStorage.setItem(this.key,JSON.stringify(this.edits)); }
+    catch (_) { if(this.storageAvailable) notify('Stockage local indisponible : utilisez Exporter HTML pour conserver les modifications.'); this.storageAvailable=false; }
+  }
+  checkFit(el) {
+    const slide=el.closest('.slide'), f=slide.getBoundingClientRect().width/1920;
+    const limit=slide.querySelector('.takeaway') || slide.querySelector('.foot');
+    const isMain=!el.closest('.takeaway,.foot');
+    if(el.scrollHeight>el.clientHeight+3 || el.scrollWidth>el.clientWidth+3 || (isMain && el.getBoundingClientRect().bottom>limit.getBoundingClientRect().top-14*f)) notify('Le texte devient trop long : raccourcissez-le ou demandez une nouvelle mise en page dans la fiche Obsidian.');
+  }
+  reset() {
+    if(!confirm('Annuler les retouches locales et revenir aux textes contenus dans ce fichier ?')) return;
+    this.fields.forEach(el=>el.innerHTML=this.baseline.get(el.dataset.edit)); this.edits={};
+    try { localStorage.removeItem(this.key); } catch (_) { /* Export still works. */ }
+    notify('Textes du fichier restaurés.');
+  }
+  exportFile() {
+    const clone=document.documentElement.cloneNode(true);
+    clone.dataset.revision=`export-${Date.now()}`;
+    clone.querySelector('body').classList.remove('editing');
+    clone.querySelectorAll('[contenteditable]').forEach(el=>{el.removeAttribute('contenteditable');el.removeAttribute('spellcheck');});
+    clone.querySelectorAll('.slide').forEach((s,i)=>{s.classList.toggle('active',i===0);s.classList.toggle('visible',i===0);s.removeAttribute('inert');s.removeAttribute('aria-hidden');});
+    clone.querySelector('#deckStage').removeAttribute('style');
+    clone.querySelector('#toast').textContent='';
+    clone.querySelector('#notesDialog').removeAttribute('open'); clone.querySelector('#notesTitle').textContent=''; clone.querySelector('#notesContent').replaceChildren();
+    clone.querySelector('#editToggle').textContent='Éditer'; clone.querySelector('#editToggle').setAttribute('aria-pressed','false');
+    const blob=new Blob(['<!DOCTYPE html>\n'+clone.outerHTML],{type:'text/html;charset=utf-8'});
+    const url=URL.createObjectURL(blob),a=document.createElement('a'); a.href=url; a.download='Souveraineté numérique - Rapport intermédiaire V2 - modifié.html'; a.click();
+    setTimeout(()=>URL.revokeObjectURL(url),10000);
+    notify('Copie HTML téléchargée avec les retouches et toutes les commandes.');
+  }
+}
+const editor=new InlineEditor();
+const presentation=new SlidePresentation();
+</script>
+</body>
+</html>

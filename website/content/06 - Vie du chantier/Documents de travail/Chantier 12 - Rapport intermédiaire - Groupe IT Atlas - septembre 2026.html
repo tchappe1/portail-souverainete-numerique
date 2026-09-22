@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chantier Souveraineté numérique · Point d'étape · Groupe IT Atlas</title>
+
+<!-- === TYPOGRAPHIE ===
+     Syne et Open Sans prolongent l'identité du support PowerPoint source. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Open+Sans:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* ===========================================
+   THÈME CLARTÉ PARADIGM
+   Modifier ces variables adapte l'ensemble du deck.
+   =========================================== */
+:root {
+    --stage-bg: #09102f;
+    --slide-bg: #ffffff;
+    --blue: #1200c5;
+    --blue-deep: #0a00be;
+    --blue-soft: #f2f2ff;
+    --teal: #134f5c;
+    --teal-2: #195d6b;
+    --mint: #d9ead3;
+    --mint-strong: #a8d4bd;
+    --ink: #12131a;
+    --ink-soft: #555b65;
+    --ink-faint: #7c818a;
+    --line: #dfe1e8;
+    --line-blue: rgba(18, 0, 197, 0.16);
+    --white: #ffffff;
+    --display: 'Syne', sans-serif;
+    --body: 'Open Sans', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* === BASE ET ATMOSPHÈRE === */
+* { box-sizing: border-box; }
+body { font-family: var(--body); color: var(--ink); }
+.slide { font-family: var(--body); color: var(--ink); }
+.slide::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(800px 560px at 96% 6%, rgba(217, 234, 211, 0.42), transparent 68%),
+        radial-gradient(760px 520px at -8% 108%, rgba(18, 0, 197, 0.045), transparent 70%);
+    pointer-events: none;
+}
+.slide.dark { background: var(--teal); color: var(--white); }
+.slide.dark::before {
+    background:
+        radial-gradient(720px 520px at 92% 10%, rgba(217, 234, 211, 0.13), transparent 66%),
+        linear-gradient(120deg, rgba(255,255,255,0.025), transparent 55%);
+}
+.content { position: absolute; left: 112px; right: 112px; top: 185px; bottom: 88px; z-index: 2; }
+.content.tight { top: 170px; }
+
+/* === CHROME DE DIAPOSITIVE === */
+.page-head {
+    position: absolute;
+    left: 112px;
+    right: 112px;
+    top: 62px;
+    height: 73px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--line);
+    z-index: 4;
+}
+.dark .page-head { border-bottom-color: rgba(255,255,255,.22); }
+.brand-line { display: flex; align-items: center; gap: 20px; }
+.brand-mark { width: 17px; height: 44px; border-radius: 12px; background: linear-gradient(#001eff, #6359cf); box-shadow: 24px 9px 0 -2px #102bc4; }
+.brand-name { font-family: var(--display); font-size: 19px; font-weight: 700; color: var(--blue); letter-spacing: .01em; }
+.dark .brand-name { color: var(--white); }
+.section-label { font-family: var(--mono); font-size: 17px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); }
+.dark .section-label { color: rgba(255,255,255,.68); }
+.folio {
+    position: absolute;
+    right: 112px;
+    bottom: 39px;
+    font-family: var(--mono);
+    font-size: 16px;
+    letter-spacing: .12em;
+    color: var(--ink-faint);
+    z-index: 5;
+}
+.dark .folio { color: rgba(255,255,255,.6); }
+
+/* === TYPOGRAPHIE ET ÉLÉMENTS PARTAGÉS === */
+.kicker { font-family: var(--mono); font-size: 19px; letter-spacing: .15em; text-transform: uppercase; color: var(--blue); margin-bottom: 22px; }
+.dark .kicker { color: var(--mint); }
+h1, h2, h3, p { margin-top: 0; }
+h2 {
+    margin-bottom: 24px;
+    font-family: var(--display);
+    font-size: 66px;
+    line-height: 1.04;
+    letter-spacing: -.032em;
+    color: var(--blue);
+}
+.dark h2 { color: var(--white); }
+.lead { max-width: 1370px; font-size: 28px; line-height: 1.42; color: var(--ink-soft); }
+.dark .lead { color: rgba(255,255,255,.78); }
+.big-quote { font-family: var(--display); font-size: 62px; line-height: 1.13; letter-spacing: -.026em; color: var(--ink); }
+.big-quote strong { color: var(--blue); }
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 14px;
+    border: 1px solid var(--line-blue);
+    border-radius: 999px;
+    background: rgba(255,255,255,.82);
+    font-family: var(--mono);
+    font-size: 14px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--blue);
+}
+.status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue); }
+.status.proposed { color: var(--teal); border-color: rgba(19,79,92,.26); }
+.status.proposed::before { background: var(--teal); }
+.dark .status { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.28); color: var(--white); }
+.note-band {
+    position: absolute;
+    left: 112px;
+    right: 112px;
+    bottom: 60px;
+    min-height: 86px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 19px 25px;
+    border-left: 8px solid var(--blue);
+    background: var(--blue-soft);
+    font-size: 23px;
+    line-height: 1.35;
+    z-index: 3;
+}
+.dark .note-band { color: var(--white); background: rgba(255,255,255,.08); border-left-color: var(--mint); }
+.note-band .label { flex: 0 0 auto; font-family: var(--mono); color: var(--blue); font-size: 15px; letter-spacing: .12em; text-transform: uppercase; }
+.dark .note-band .label { color: var(--mint); }
+
+/* === ANIMATIONS PROFESSIONNELLES === */
+.reveal { opacity: 0; transform: translateY(25px); transition: opacity .54s var(--ease), transform .54s var(--ease); }
+.reveal-left { opacity: 0; transform: translateX(-36px); transition: opacity .62s var(--ease), transform .62s var(--ease); }
+.reveal-scale { opacity: 0; transform: scale(.96); transition: opacity .62s var(--ease), transform .62s var(--ease); }
+.slide.visible .reveal, .slide.visible .reveal-left, .slide.visible .reveal-scale { opacity: 1; transform: none; }
+.d1 { transition-delay: .07s; } .d2 { transition-delay: .16s; } .d3 { transition-delay: .25s; }
+.d4 { transition-delay: .34s; } .d5 { transition-delay: .43s; } .d6 { transition-delay: .52s; }
+
+/* === SLIDE 1 : COUVERTURE === */
+.cover-top { position: absolute; inset: 0 0 320px 0; background: var(--white); }
+.cover-bottom { position: absolute; left: 0; right: 0; bottom: 0; height: 320px; background: var(--teal); }
+.cover-bottom::before { content: ""; position: absolute; left: 0; top: 0; width: 1240px; height: 10px; background: var(--blue); }
+.cover-logo { position: absolute; top: 72px; left: 112px; width: 206px; height: 98px; object-fit: contain; z-index: 3; }
+.cover-meta { position: absolute; top: 105px; right: 112px; font-size: 19px; font-weight: 600; letter-spacing: .16em; color: var(--blue); text-transform: uppercase; z-index: 3; }
+.cover-hero { position: absolute; left: 112px; top: 280px; width: 1140px; z-index: 3; }
+.cover-hero .eyebrow { font-size: 30px; margin-bottom: 22px; }
+.cover-hero h1 { margin: 0; font-family: var(--display); font-size: 91px; line-height: 1.02; letter-spacing: -.035em; color: var(--blue); }
+.cover-orbit { position: absolute; width: 735px; height: 735px; right: -76px; top: 135px; border-radius: 50%; background: linear-gradient(145deg, #f6f7ff 15%, var(--mint) 100%); border: 2px solid rgba(18,0,197,.08); }
+.cover-orbit::before { content: ""; position: absolute; inset: 82px; border-radius: 50%; border: 2px solid rgba(18,0,197,.16); }
+.cover-orbit::after { content: ""; position: absolute; inset: 180px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 0 42px rgba(18,0,197,.08); }
+.cover-statement { position: absolute; left: 112px; bottom: 92px; width: 1180px; color: var(--white); font-family: var(--display); font-size: 37px; line-height: 1.24; z-index: 3; }
+.cover-date { position: absolute; right: 112px; bottom: 98px; color: var(--white); text-align: right; font-size: 24px; line-height: 1.45; z-index: 3; }
+.cover-date strong { display: block; color: var(--mint); font-family: var(--display); font-size: 30px; }
+
+/* === SLIDE 2 : TROIS MESSAGES === */
+.message-stack { position: absolute; left: 0; right: 0; top: 182px; bottom: 184px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.message-card { position: relative; padding: 42px 38px 36px; border-top: 7px solid var(--blue); background: #f7f7fb; overflow: hidden; }
+.message-card:nth-child(2) { border-top-color: var(--teal); background: #f2f7f5; }
+.message-card:nth-child(3) { background: var(--teal); color: var(--white); border-top-color: var(--mint); }
+.message-no { font-family: var(--display); font-size: 104px; font-weight: 800; line-height: 1; color: rgba(18,0,197,.12); }
+.message-card:nth-child(2) .message-no { color: rgba(19,79,92,.15); }
+.message-card:nth-child(3) .message-no { color: rgba(255,255,255,.15); }
+.message-card h3 { margin: 38px 0 18px; font-family: var(--display); font-size: 39px; line-height: 1.12; color: var(--blue); }
+.message-card:nth-child(2) h3 { color: var(--teal); }
+.message-card:nth-child(3) h3 { color: var(--white); }
+.message-card p { margin: 0; font-size: 23px; line-height: 1.42; color: var(--ink-soft); }
+.message-card:nth-child(3) p { color: rgba(255,255,255,.76); }
+
+/* === SLIDE 3 : DÉFINITION ET IDÉES REÇUES === */
+.definition-layout { display: grid; grid-template-columns: 1.28fr .72fr; gap: 64px; height: 690px; }
+.definition-main { position: relative; padding: 48px 52px; background: var(--blue-soft); border-left: 10px solid var(--blue); }
+.definition-main .status { margin-bottom: 40px; }
+.definition-main .big-quote { font-size: 56px; }
+.definition-main .meaning { position: absolute; left: 52px; right: 52px; bottom: 45px; font-size: 25px; line-height: 1.4; color: var(--ink-soft); }
+.myths { display: grid; grid-template-rows: repeat(3, 1fr); gap: 18px; }
+.myth { padding: 27px 30px; border: 1px solid var(--line); background: var(--white); }
+.myth strong { display: block; margin-bottom: 10px; font-family: var(--display); font-size: 27px; color: var(--blue); }
+.myth span { font-size: 20px; line-height: 1.35; color: var(--ink-soft); }
+
+/* === SLIDE 4 : POURQUOI MAINTENANT === */
+.drivers { position: relative; height: 590px; margin-top: 12px; }
+.driver { position: absolute; width: 470px; min-height: 182px; padding: 30px 32px; background: var(--white); border: 1px solid var(--line); box-shadow: 0 12px 32px rgba(18,0,197,.055); }
+.driver h3 { margin: 0 0 12px; font-family: var(--display); font-size: 29px; color: var(--blue); }
+.driver p { margin: 0; font-size: 20px; line-height: 1.4; color: var(--ink-soft); }
+.driver.a { left: 0; top: 40px; } .driver.b { left: 0; bottom: 28px; }
+.driver.c { right: 0; top: 40px; } .driver.d { right: 0; bottom: 28px; }
+.driver-center { position: absolute; left: 624px; top: 124px; width: 440px; height: 330px; display: grid; place-items: center; text-align: center; background: var(--teal); color: var(--white); border-radius: 48% 52% 52% 48% / 52% 47% 53% 48%; box-shadow: 0 0 0 34px rgba(217,234,211,.56); }
+.driver-center strong { display: block; font-family: var(--display); font-size: 43px; line-height: 1.08; }
+.driver-center span { display: block; margin-top: 18px; font-size: 20px; color: var(--mint); }
+.connector { position: absolute; height: 3px; background: rgba(18,0,197,.22); transform-origin: left center; }
+.c1 { left: 450px; top: 170px; width: 235px; transform: rotate(8deg); }
+.c2 { left: 450px; top: 480px; width: 235px; transform: rotate(-14deg); }
+.c3 { right: 450px; top: 170px; width: 235px; transform: rotate(172deg); }
+.c4 { right: 450px; top: 480px; width: 235px; transform: rotate(194deg); }
+
+/* === SLIDE 5 : MÉTHODE ET AVANCEMENT === */
+.flow { position: relative; height: 650px; margin-top: 5px; }
+.source-column { position: absolute; left: 0; top: 0; width: 390px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.source { min-height: 118px; padding: 22px 18px; border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.075); }
+.source .icon { display: block; margin-bottom: 12px; color: var(--mint); font-family: var(--mono); font-size: 16px; }
+.source strong { font-family: var(--display); font-size: 22px; line-height: 1.16; }
+.hub { position: absolute; left: 566px; top: 110px; width: 470px; height: 390px; display: grid; place-items: center; text-align: center; border-radius: 50%; background: var(--white); color: var(--teal); box-shadow: 0 0 0 42px rgba(217,234,211,.22); }
+.hub strong { display: block; font-family: var(--display); font-size: 46px; line-height: 1.07; }
+.hub span { display: block; margin-top: 20px; font-size: 21px; color: var(--ink-soft); }
+.output-column { position: absolute; right: 0; top: 38px; width: 430px; display: grid; gap: 18px; }
+.output { min-height: 142px; padding: 27px 30px; color: var(--ink); background: var(--mint); }
+.output:nth-child(2) { color: var(--white); background: var(--blue); }
+.output:nth-child(3) { background: var(--white); }
+.output .time { font-family: var(--mono); font-size: 14px; letter-spacing: .1em; text-transform: uppercase; opacity: .68; }
+.output strong { display: block; margin-top: 11px; font-family: var(--display); font-size: 27px; line-height: 1.15; }
+.flow-line { position: absolute; height: 3px; background: var(--mint); }
+.flow-line.left { left: 365px; top: 305px; width: 225px; }
+.flow-line.right { left: 1010px; top: 305px; width: 245px; }
+.flow-line::after { content: ""; position: absolute; right: -2px; top: -7px; border-left: 15px solid var(--mint); border-top: 8px solid transparent; border-bottom: 8px solid transparent; }
+
+/* === SLIDE 6 : CHIFFRES FOURNISSEURS === */
+.stats-layout { display: grid; grid-template-columns: 430px 1fr; gap: 56px; height: 650px; }
+.stat-total { position: relative; padding: 42px; background: var(--teal); color: var(--white); }
+.stat-total .number { font-family: var(--display); font-size: 166px; font-weight: 800; line-height: .92; }
+.stat-total h3 { margin: 32px 0 20px; font-family: var(--display); font-size: 36px; line-height: 1.14; }
+.stat-total p { margin: 0; font-size: 21px; line-height: 1.42; color: rgba(255,255,255,.74); }
+.bar-list { display: grid; gap: 22px; align-content: start; }
+.bar-row { padding: 24px 28px 26px; border: 1px solid var(--line); background: var(--white); }
+.bar-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 15px; }
+.bar-label { font-family: var(--display); font-size: 27px; font-weight: 700; }
+.bar-value { font-family: var(--display); font-size: 43px; color: var(--blue); font-weight: 800; }
+.bar-track { height: 20px; background: #ececf4; overflow: hidden; }
+.bar-fill { height: 100%; width: 0; background: var(--blue); transition: width 1s var(--ease) .28s; }
+.bar-row.eu .bar-fill { background: var(--mint-strong); }
+.slide.visible .bar-fill.p42 { width: 42%; } .slide.visible .bar-fill.p26 { width: 26%; }
+.slide.visible .bar-fill.p65 { width: 65%; } .slide.visible .bar-fill.p88 { width: 88%; }
+.bar-caption { margin-top: 10px; font-size: 17px; color: var(--ink-faint); }
+
+/* === SLIDE 7 : TYPOLOGIE DES DÉPENDANCES === */
+.axis-row { display: flex; gap: 12px; margin: 8px 0 30px; }
+.axis-chip { padding: 10px 17px; border-radius: 999px; background: var(--blue-soft); color: var(--blue); font-family: var(--mono); font-size: 14px; letter-spacing: .06em; text-transform: uppercase; }
+.dependency-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.dependency-card { min-height: 432px; padding: 34px 34px 30px; border: 1px solid var(--line); background: var(--white); }
+.dependency-card:nth-child(2) { background: #f5f9f7; border-color: rgba(19,79,92,.16); }
+.dependency-card:nth-child(3) { color: var(--white); background: var(--teal); border-color: var(--teal); }
+.dependency-card .case-no { font-family: var(--mono); font-size: 15px; color: var(--blue); }
+.dependency-card:nth-child(3) .case-no { color: var(--mint); }
+.dependency-card h3 { margin: 32px 0 20px; font-family: var(--display); font-size: 36px; color: var(--blue); }
+.dependency-card:nth-child(2) h3 { color: var(--teal); }
+.dependency-card:nth-child(3) h3 { color: var(--white); }
+.dependency-card p { font-size: 22px; line-height: 1.4; color: var(--ink-soft); }
+.dependency-card:nth-child(3) p { color: rgba(255,255,255,.78); }
+.dependency-card .impact { display: block; margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 18px; color: var(--ink-faint); }
+.dependency-card:nth-child(3) .impact { border-top-color: rgba(255,255,255,.2); color: var(--mint); }
+
+/* === SLIDE 8 : ACTIFS RÉGIONAUX === */
+.asset-layout { display: grid; grid-template-columns: .86fr 1.14fr; gap: 46px; height: 676px; }
+.asset-side h3, .layers-side h3 { margin: 0 0 24px; font-family: var(--display); font-size: 31px; color: var(--blue); }
+.asset-list { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.asset { min-height: 176px; padding: 27px 25px; background: #f4f8f5; border-top: 5px solid var(--mint-strong); }
+.asset .symbol { font-family: var(--mono); font-size: 17px; color: var(--teal); }
+.asset strong { display: block; margin-top: 20px; font-family: var(--display); font-size: 27px; color: var(--teal); }
+.asset span { display: block; margin-top: 8px; font-size: 18px; line-height: 1.35; color: var(--ink-soft); }
+.layers-side { padding: 0 0 0 22px; }
+.layer-stack { display: grid; gap: 10px; }
+.layer { position: relative; min-height: 80px; padding: 17px 28px; background: var(--blue); color: var(--white); }
+.layer:nth-child(2) { margin-left: 38px; background: #2d22cc; }
+.layer:nth-child(3) { margin-left: 76px; background: #4c44d4; }
+.layer:nth-child(4) { margin-left: 114px; background: var(--teal); }
+.layer:nth-child(5) { margin-left: 152px; color: var(--teal); background: var(--mint); }
+.layer strong { font-family: var(--display); font-size: 25px; }
+.layer span { position: absolute; right: 24px; top: 22px; font-family: var(--mono); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; opacity: .74; }
+.contrast-label { margin-top: 22px; padding: 17px 20px; border-left: 6px solid var(--blue); font-size: 19px; line-height: 1.38; color: var(--ink-soft); background: var(--blue-soft); }
+
+/* === SLIDES 9 ET 10 : REPÈRES TOM IT === */
+.principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-top: 28px; }
+.principle { position: relative; min-height: 520px; padding: 35px 33px; background: var(--white); border: 1px solid rgba(255,255,255,.22); color: var(--ink); }
+.principle:nth-child(2) { background: var(--mint); }
+.principle:nth-child(3) { background: var(--blue); color: var(--white); }
+.principle .pno { font-family: var(--display); font-size: 92px; line-height: 1; font-weight: 800; color: rgba(18,0,197,.12); }
+.principle:nth-child(2) .pno { color: rgba(19,79,92,.16); }
+.principle:nth-child(3) .pno { color: rgba(255,255,255,.16); }
+.principle h3 { margin: 30px 0 18px; font-family: var(--display); font-size: 34px; line-height: 1.13; color: var(--blue); }
+.principle:nth-child(2) h3 { color: var(--teal); }
+.principle:nth-child(3) h3 { color: var(--white); }
+.principle p { margin: 0; font-size: 21px; line-height: 1.4; color: var(--ink-soft); }
+.principle:nth-child(3) p { color: rgba(255,255,255,.76); }
+.principle .tom-link { position: absolute; left: 33px; right: 33px; bottom: 30px; padding-top: 18px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 14px; line-height: 1.42; letter-spacing: .05em; color: var(--teal); }
+.principle:nth-child(3) .tom-link { border-top-color: rgba(255,255,255,.24); color: var(--mint); }
+.principle.alt { min-height: 500px; }
+.lever-list { display: grid; gap: 11px; margin-top: 18px; }
+.lever { padding: 12px 14px; background: rgba(255,255,255,.68); font-size: 18px; color: var(--ink-soft); }
+.principle:nth-child(3) .lever { background: rgba(255,255,255,.1); color: rgba(255,255,255,.78); }
+
+/* === SLIDE 11 : FEUILLE DE ROUTE === */
+.roadmap { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 34px; }
+.milestone { position: relative; min-height: 225px; padding: 40px 27px 28px; border-top: 4px solid var(--blue); background: #f7f7fb; }
+.milestone::after { content: ""; position: absolute; right: -14px; top: 55px; z-index: 4; width: 28px; height: 28px; background: var(--blue); transform: rotate(45deg); }
+.milestone:last-child::after { display: none; }
+.milestone:nth-child(2) { background: #f1f7f4; border-top-color: var(--teal); }
+.milestone:nth-child(3) { background: var(--mint); border-top-color: var(--teal); }
+.milestone:nth-child(4) { color: var(--white); background: var(--teal); border-top-color: var(--mint); }
+.milestone .month { font-family: var(--mono); font-size: 15px; letter-spacing: .1em; text-transform: uppercase; color: var(--blue); }
+.milestone:nth-child(2) .month, .milestone:nth-child(3) .month { color: var(--teal); }
+.milestone:nth-child(4) .month { color: var(--mint); }
+.milestone strong { display: block; margin-top: 25px; font-family: var(--display); font-size: 29px; line-height: 1.16; }
+.milestone p { margin: 13px 0 0; font-size: 18px; line-height: 1.38; color: var(--ink-soft); }
+.milestone:nth-child(4) p { color: rgba(255,255,255,.73); }
+.final-targets { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 28px; }
+.target { min-height: 106px; padding: 20px 20px; border: 1px solid var(--line); font-size: 18px; line-height: 1.35; color: var(--ink-soft); }
+.target strong { display: block; margin-bottom: 7px; color: var(--blue); font-family: var(--display); font-size: 20px; }
+.closing-strip { position: absolute; left: 0; right: 0; bottom: 0; height: 145px; display: flex; align-items: center; justify-content: space-between; padding: 0 112px; background: var(--teal); color: var(--white); z-index: 4; }
+.closing-strip p { width: 1380px; margin: 0; font-family: var(--display); font-size: 31px; line-height: 1.25; }
+.closing-logo { width: 178px; height: 86px; object-fit: contain; padding: 9px 12px; background: var(--white); }
+
+/* === CONTRÔLES DE PRÉSENTATION === */
+.deck-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 10px;
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 999px;
+    background: rgba(8,13,38,.84);
+    box-shadow: 0 10px 28px rgba(0,0,0,.22);
+    backdrop-filter: blur(10px);
+    color: var(--white);
+    font-family: var(--mono);
+}
+.deck-controls button { width: 34px; height: 34px; border: 0; border-radius: 50%; background: transparent; color: var(--white); font-size: 20px; cursor: pointer; }
+.deck-controls button:hover { background: rgba(255,255,255,.12); }
+.deck-counter { min-width: 86px; text-align: center; font-size: 14px; letter-spacing: .08em; }
+.progress-shell { width: 110px; height: 3px; overflow: hidden; background: rgba(255,255,255,.22); }
+.progress-bar { width: 0; height: 100%; background: var(--mint); transition: width .3s ease; }
+
+/* === ÉDITION INLINE === */
+.edit-hotzone { position: fixed; left: 0; top: 0; width: 82px; height: 82px; z-index: 10000; cursor: pointer; }
+.edit-toggle { position: fixed; left: 16px; top: 16px; z-index: 10001; opacity: 0; pointer-events: none; padding: 10px 15px; border: 1px solid rgba(255,255,255,.22); border-radius: 999px; background: rgba(8,13,38,.9); color: var(--white); font-family: var(--body); font-weight: 600; transition: opacity .25s ease; }
+.edit-toggle.show, .edit-toggle.active { opacity: 1; pointer-events: auto; }
+.edit-toast { position: fixed; left: 50%; top: 22px; z-index: 10002; opacity: 0; transform: translate(-50%,-16px); padding: 12px 19px; border-radius: 8px; background: rgba(8,13,38,.92); color: var(--white); font-family: var(--body); font-size: 14px; transition: opacity .25s ease, transform .25s ease; }
+.edit-toast.show { opacity: 1; transform: translate(-50%,0); }
+body.editing [contenteditable="true"] { outline: 2px dashed rgba(18,0,197,.38); outline-offset: 4px; cursor: text; }
+</style>
+</head>
+
+<body>
+<div class="deck-viewport" id="deckViewport">
+<main class="deck-stage" id="deckStage">
+
+<!-- ===========================================
+     SLIDE 1 · COUVERTURE
+     =========================================== -->
+<section class="slide cover active" aria-label="Couverture">
+    <div class="cover-top"></div>
+    <div class="cover-bottom"></div>
+    <div class="cover-orbit"></div>
+    <img class="cover-logo reveal d1" alt="Paradigm Brussels" src="data:image/png;base64,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">
+    <div class="cover-meta reveal d1">Groupe IT Atlas</div>
+    <div class="cover-hero">
+        <div class="eyebrow reveal d2">Chantier Souveraineté numérique</div>
+        <h1 class="reveal d3">Point d’étape du<br>rapport intermédiaire</h1>
+    </div>
+    <div class="cover-statement reveal d4">Connaître nos dépendances. Organiser notre capacité à les maîtriser.</div>
+    <div class="cover-date reveal d4"><strong>Septembre 2026</strong>Région de Bruxelles-Capitale</div>
+</section>
+
+<!-- ===========================================
+     SLIDE 2 · TROIS MESSAGES À RETENIR
+     =========================================== -->
+<section class="slide" aria-label="Trois messages à retenir">
+    <header class="page-head"><div class="brand-line"><span class="brand-mark"></span><span class="brand-name">Chantier Souveraineté numérique</span></div><span class="section-label">Synthèse</span></header>
+    <div class="content tight">
+        <div class="kicker reveal d1">L’essentiel en trois idées</div>
+        <h2 class="reveal d2">Ce que l’on peut retenir aujourd’hui</h2>
+        <div class="message-stack">
+            <article class="message-card reveal d2"><div class="message-no">01</div><h3>Une capacité de maîtrise</h3><p>La souveraineté ne signifie pas l’autonomie absolue. Elle vise à préserver la décision, l’action et la continuité.</p></article>
+            <article class="message-card reveal d3"><div class="message-no">02</div><h3>La Région a des points d’appui</h3><p>Infrastructures, réseau, applications, mutualisations et compétences constituent des capacités à évaluer.</p></article>
+            <article class="message-card reveal d4"><div class="message-no">03</div><h3>Une démarche progressive</h3><p>Septembre partage un état de la réflexion. Décembre consolidera l’analyse et proposera des suites réalistes.</p></article>
+        </div>
+    </div>
+    <div class="note-band reveal d5"><span class="label">Cadre</span><span>Aucune décision, rupture technologique générale ou sélection de fournisseur n’est demandée à ce stade.</span></div>
+    <div class="folio">02 / 11</div>
+</section>
+
+<!-- ===========================================
+     SLIDE 3 · DÉFINITION ET IDÉES REÇUES
+     =========================================== -->
+<section class="slide" aria-label="Définition de la souveraineté numérique">
+    <header class="page-head"><div class="brand-line"><span class="brand-mark"></span><span class="brand-name">Chantier Souveraineté numérique</span></div><span class="section-label">Comprendre</span></header>
+    <div class="content tight">
+        <div class="kicker reveal d1">Une définition opérationnelle</div>
+        <h2 class="reveal d2">Maîtriser plutôt que tout posséder</h2>
+        <div class="definition-layout">
+            <div class="definition-main reveal-left d3">
+                <span class="status proposed">Définition de travail</span>
+                <div class="big-quote">La capacité à <strong>connaître, maîtriser et arbitrer</strong> ses dépendances numériques.</div>
+                <p class="meaning">Pour préserver la capacité de décision, d’action et de continuité des services publics.</p>
+            </div>
+            <div class="myths">
+                <div class="myth reveal d3"><strong>« Sortir de Microsoft »</strong><span>Analyser d’abord les usages, les conséquences et les alternatives.</span></div>
+                <div class="myth reveal d4"><strong>« Héberger en Europe suffit »</strong><span>La localisation ne règle pas seule le contrôle, la juridiction ou la réversibilité.</span></div>
+                <div class="myth reveal d5"><strong>« Open source = souverain »</strong><span>Le code ouvert est un levier, à compléter par les compétences et la maintenance.</span></div>
+            </div>
+        </div>
+    </div>
+    <div class="folio">03 / 11</div>
+</section>
+
+<!-- ===========================================
+     SLIDE 4 · POURQUOI LE SUJET COMPTE
+     =========================================== -->
+<section class="slide" aria-label="Pourquoi le sujet mérite notre attention">
+    <header class="page-head"><div class="brand-line"><span class="brand-mark"></span><span class="brand-name">Chantier Souveraineté numérique</span></div><span class="section-label">Contexte</span></header>
+    <div class="content tight">
+        <div class="kicker reveal d1">Pourquoi maintenant ?</div>
+        <h2 class="reveal d2">Les dépendances se renforcent et se combinent</h2>
+        <div class="drivers">
+            <div class="connector c1"></div><div class="connector c2"></div><div class="connector c3"></div><div class="connector c4"></div>
+            <article class="driver a reveal d2"><h3>Concentration</h3><p>Certaines couches cloud et IA reposent sur un nombre limité d’acteurs mondiaux.</p></article>
+            <article class="driver b reveal d3"><h3>Intégration croissante</h3><p>Services, données, identités et IA deviennent plus difficiles à dissocier.</p></article>
+            <article class="driver c reveal d4"><h3>Conditions économiques</h3><p>Modèles commerciaux, prix et modalités d’accès peuvent évoluer rapidement.</p></article>
+            <article class="driver d reveal d5"><h3>Cadres juridiques</h3><p>Les règles européennes et les législations extraterritoriales se superposent.</p></article>
+            <div class="driver-center reveal-scale d3"><div><strong>Capacité<br>de maîtrise</strong><span>Le point commun à examiner</span></div></div>
+        </div>
+    </div>
+    <div class="note-band reveal d6"><span class="label">Repère</span><span>Une dépendance n’est pas nécessairement inacceptable : son traitement dépend de ses conséquences et des marges de manœuvre disponibles.</span></div>
+    <div class="folio">04 / 11</div>
+</section>
+
+<!-- ===========================================
+     SLIDE 5 · MÉTHODE ET AVANCEMENT
+     =========================================== -->
+<section class="slide dark" aria-label="Méthode et avancement du chantier">
+    <header class="page-head"><div class="brand-line"><span class="brand-mark"></span><span class="brand-name">Chantier Souveraineté numérique</span></div><span class="section-label">Démarche et avancement</span></header>
+    <div class="content tight">
+        <div class="kicker reveal d1">Une construction collective</div>
+        <h2 class="reveal d2">Des sources multiples vers une lecture commune</h2>
+        <div class="flow">
+            <div class="source-column">
+                <div class="source reveal d2"><span class="icon">01 · TERRAIN</span><strong>Entretiens et sondages</strong></div>
+                <div class="source reveal d3"><span class="icon">02 · MARCHÉ</span><strong>Analyse fournisseurs</strong></div>
+                <div class="source reveal d3"><span class="icon">03 · EXTERNE</span><strong>Benchmark européen</strong></div>
+                <div class="source reveal d4"><span class="icon">04 · CADRE</span><strong>Solvay, OCTO et CADA</strong></div>
+            </div>
+            <div class="flow-line left"></div>
+            <div class="hub reveal-scale d3"><div><strong>Cerveau<br>collectif</strong><span>Corpus structuré, partagé<br>et progressivement consolidé</span></div></div>
+            <div class="flow-line right"></div>
+            <div class="output-column">
+                <div class="output reveal d3"><span class="time">Aujourd’hui</span><strong>Premiers constats documentés</strong></div>
+                <div class="output reveal d4"><span class="time">Septembre</span><strong>Rapport intermédiaire</strong></div>
+                <div class="output reveal d5"><span class="time">Décembre</span><strong>Analyse consolidée et propositions</strong></div>
+            </div>
+        </div>
+    </div>
+    <div class="note-band reveal d6"><span class="label">Limite</span><span>Les travaux convergent, mais la validation collective des messages structurants reste partielle.</span></div>
+    <div class="folio">05 / 11</div>
+</section>
+
+<!-- ===========================================
+     SLIDE 6 · PREMIÈRE PHOTOGRAPHIE FOURNISSEURS
+     =========================================== -->
+<section class="slide" aria-label="Première analyse du portefeuille fournisseurs">
+    <header class="page-head"><div class="brand-line"><span class="brand-mark"></span><span class="brand-name">Chantier Souveraineté numérique</span></div><span class="section-label">Premiers enseignements</span></header>
+    <div class="content tight">
+        <div class="kicker reveal d1">Une première photographie</div>
+        <h2 class="reveal d2">L’exposition augmente sur le cloud et l’IA</h2>
+        <div class="stats-layout">
+            <div class="stat-total reveal-left d2"><div class="number">137</div><h3>éditeurs et fabricants référencés</h3><p>Analyse du portefeuille Paradigm. Il s’agit d’un comptage de fournisseurs, pas d’une mesure des dépenses ou de la criticité.</p></div>
+            <div class="bar-list">
+                <div class="bar-row reveal d2"><div class="bar-top"><span class="bar-label">Siège aux États-Unis</span><span class="bar-value">42 %</span></div><div class="bar-track"><div class="bar-fill p42"></div></div></div>
+                <div class="bar-row eu reveal d3"><div class="bar-top"><span class="bar-label">Siège dans l’Union européenne</span><span class="bar-value">26 %</span></div><div class="bar-track"><div class="bar-fill p26"></div></div></div>
+                <div class="bar-row reveal d4"><div class="bar-top"><span class="bar-label">Fournisseurs associés au cloud basés aux États-Unis</span><span class="bar-value">65 %</span></div><div class="bar-track"><div class="bar-fill p65"></div></div></div>
+                <div class="bar-row reveal d5"><div class="bar-top"><span class="bar-label">Fournisseurs associés à l’IA basés aux États-Unis</span><span class="bar-value">88 %</span></div><div class="bar-track"><div class="bar-fill p88"></div></div><div class="bar-caption">Calculs, catégories et dénominateurs à confirmer avant publication.</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="folio">06 / 11</div>
+</section>
+
+<!-- ===========================================
+     SLIDE 7 · DES DÉPENDANCES DIFFÉRENTES
+     =========================================== -->
+<section class="slide" aria-label="Des dépendances de nature différente">
+    <header class="page-head"><div class="brand-line"><span class="brand-mark"></span><span class="brand-name">Chantier Souveraineté numérique</span></div><span class="section-label">Premiers enseignements</span></header>
+    <div class="content tight">
+        <div class="kicker reveal d1">Un risque multidimensionnel</div>
+        <h2 class="reveal d2">Toutes les dépendances ne se traitent pas de la même manière</h2>
+        <div class="axis-row reveal d2"><span class="axis-chip">Données & droit</span><span class="axis-chip">Technique</span><span class="axis-chip">Économie</span><span class="axis-chip">Approvisionnement</span><span class="axis-chip">Compétences</span></div>
+        <div class="dependency-grid">
+            <article class="dependency-card reveal d3"><span class="case-no">CAS 01 · ÉCONOMIE + TECHNIQUE</span><h3>VMware / Broadcom</h3><p>Évolution des conditions commerciales et dépendance à un écosystème difficile à substituer rapidement.</p><span class="impact">À documenter : coûts, architecture concernée et délais réalistes de transition.</span></article>
+            <article class="dependency-card reveal d4"><span class="case-no">CAS 02 · DROIT + INTÉGRATION</span><h3>Microsoft 365</h3><p>Données, juridiction, identité, intégrations et coûts de sortie doivent être examinés ensemble.</p><span class="impact">Ne pas réduire l’analyse au seul lieu d’hébergement des données.</span></article>
+            <article class="dependency-card reveal d5"><span class="case-no">CAS 03 · ORGANISATION</span><h3>Compétences critiques</h3><p>Sans transfert de connaissance, la capacité de piloter, maintenir ou reprendre un service peut disparaître.</p><span class="impact">Constat confirmé : la relève et la documentation sont des conditions de maîtrise.</span></article>
+        </div>
+    </div>
+    <div class="note-band reveal d6"><span class="label">Conclusion</span><span>Il n’existe pas de réponse uniforme par fournisseur ou par technologie.</span></div>
+    <div class="folio">07 / 11</div>
+</section>
+
+<!-- ===========================================
+     SLIDE 8 · ACTIFS ET CAPACITÉS RÉGIONALES
+     =========================================== -->
+<section class="slide" aria-label="Actifs et capacités de la Région">
+    <header class="page-head"><div class="brand-line"><span class="brand-mark"></span><span class="brand-name">Chantier Souveraineté numérique</span></div><span class="section-label">Premiers enseignements</span></header>
+    <div class="content tight">
+        <div class="kicker reveal d1">La Région ne part pas de zéro</div>
+        <h2 class="reveal d2">Des capacités réelles, mais une maîtrise à qualifier</h2>
+        <div class="asset-layout">
+            <div class="asset-side">
+                <h3 class="reveal d2">Points d’appui mobilisables</h3>
+                <div class="asset-list">
+                    <div class="asset reveal d2"><span class="symbol">01 · INFRA</span><strong>Datacenter régional</strong><span>Capacités physiques d’hébergement et de continuité.</span></div>
+                    <div class="asset reveal d3"><span class="symbol">02 · RÉSEAU</span><strong>IrisNet</strong><span>Connectivité et infrastructure régionale partagée.</span></div>
+                    <div class="asset reveal d4"><span class="symbol">03 · COOPÉRATION</span><strong>Mutualisations</strong><span>Partage potentiel des coûts, compétences et opérations.</span></div>
+                    <div class="asset reveal d5"><span class="symbol">04 · SAVOIR-FAIRE</span><strong>Applications et métiers</strong><span>Connaissance des services publics et compétences internes.</span></div>
+                </div>
+            </div>
+            <div class="layers-side">
+                <h3 class="reveal d2">Le contraste à examiner</h3>
+                <div class="layer-stack">
+                    <div class="layer reveal d2"><strong>Services publics numériques</strong><span>Finalité</span></div>
+                    <div class="layer reveal d3"><strong>Applications et collaboration</strong><span>Mixte</span></div>
+                    <div class="layer reveal d3"><strong>Cloud et données</strong><span>Majoritairement international</span></div>
+                    <div class="layer reveal d4"><strong>Virtualisation et systèmes</strong><span>Dépendances fortes</span></div>
+                    <div class="layer reveal d5"><strong>Datacenter, fibres et réseau</strong><span>Ancrage régional</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="note-band reveal d6"><span class="label">Point clé</span><span>Disposer d’un actif ne garantit pas sa maîtrise : il faut aussi pouvoir l’exploiter, le maintenir et organiser la relève.</span></div>
+    <div class="folio">08 / 11</div>
+</section>
+
+<!-- ===========================================
+     SLIDE 9 · PREMIERS REPÈRES TOM IT 1 À 3
+     =========================================== -->
+<section class="slide dark" aria-label="Premiers repères pour le TOM IT, première partie">
+    <header class="page-head"><div class="brand-line"><span class="brand-mark"></span><span class="brand-name">Chantier Souveraineté numérique</span></div><span class="section-label">Repères pour le TOM IT · 01–03</span></header>
+    <div class="content tight">
+        <span class="status proposed reveal d1">Principes proposés à validation</span>
+        <h2 class="reveal d2" style="margin-top:24px">Construire la maîtrise dès la conception</h2>
+        <div class="principles">
+            <article class="principle reveal d3"><div class="pno">01</div><h3>Partir des services</h3><p>Proportionner le niveau de maîtrise aux conséquences sur les missions, les données et la continuité.</p><div class="tom-link">TOM IT · Langage commun entre métiers, architecture, sécurité, juridique et achats.</div></article>
+            <article class="principle reveal d4"><div class="pno">02</div><h3>Préserver les compétences critiques</h3><p>Conserver la capacité à comprendre un service, piloter un prestataire et organiser une transition.</p><div class="tom-link">TOM IT · Documentation, transmission, formation et relève des personnes clés.</div></article>
+            <article class="principle reveal d5"><div class="pno">03</div><h3>Intégrer les dépendances dans l’architecture et les achats</h3><p>Examiner les marges de manœuvre avant l’engagement, pas seulement lorsqu’une sortie devient nécessaire.</p><div class="tom-link">TOM IT · Exigences communes, formats ouverts, API, juridictions et assistance à la sortie.</div></article>
+        </div>
+    </div>
+    <div class="folio">09 / 11</div>
+</section>
+
+<!-- ===========================================
+     SLIDE 10 · PREMIERS REPÈRES TOM IT 4 À 6
+     =========================================== -->
+<section class="slide dark" aria-label="Premiers repères pour le TOM IT, deuxième partie">
+    <header class="page-head"><div class="brand-line"><span class="brand-mark"></span><span class="brand-name">Chantier Souveraineté numérique</span></div><span class="section-label">Repères pour le TOM IT · 04–06</span></header>
+    <div class="content tight">
+        <span class="status proposed reveal d1">Modalités à instruire</span>
+        <h2 class="reveal d2" style="margin-top:24px">Rendre la maîtrise effective et durable</h2>
+        <div class="principles">
+            <article class="principle alt reveal d3"><div class="pno">04</div><h3>Organiser la réversibilité réelle</h3><p>Évaluer la sortie sur le service complet : données, configurations, identités, intégrations, documentation, compétences, délais et coûts.</p><div class="tom-link">Une clause contractuelle ou un export ne suffisent pas à garantir la continuité.</div></article>
+            <article class="principle alt reveal d4"><div class="pno">05</div><h3>Évaluer les leviers sans automatisme</h3><div class="lever-list"><div class="lever">Diversification · réduit certaines concentrations, mais ajoute de la complexité.</div><div class="lever">Mutualisation · partage les capacités, mais peut créer une fragilité commune.</div><div class="lever">Open source · améliore l’auditabilité, si maintenance et compétences existent.</div></div></article>
+            <article class="principle alt reveal d5"><div class="pno">06</div><h3>Piloter dans le temps</h3><p>Identifier, qualifier, prioriser, traiter et suivre les dépendances plutôt que produire une photographie ponctuelle.</p><div class="tom-link">TOM IT · Responsabilités, actualisation du registre et articulation avec la gestion des risques.</div></article>
+        </div>
+    </div>
+    <div class="folio">10 / 11</div>
+</section>
+
+<!-- ===========================================
+     SLIDE 11 · D'ICI DÉCEMBRE
+     =========================================== -->
+<section class="slide" aria-label="Feuille de route jusqu'au rapport final">
+    <header class="page-head"><div class="brand-line"><span class="brand-mark"></span><span class="brand-name">Chantier Souveraineté numérique</span></div><span class="section-label">Prochaines étapes</span></header>
+    <div class="content tight" style="bottom:160px">
+        <div class="kicker reveal d1">D’ici décembre</div>
+        <h2 class="reveal d2">Consolider l’analyse et préparer des suites réalistes</h2>
+        <div class="roadmap">
+            <article class="milestone reveal d2"><span class="month">Septembre</span><strong>Partager le point d’étape</strong><p>Clarifier le sujet, les acquis et les limites du diagnostic.</p></article>
+            <article class="milestone reveal d3"><span class="month">Octobre</span><strong>Consolider les sources</strong><p>Entretiens, fournisseurs, benchmark et périmètre régional.</p></article>
+            <article class="milestone reveal d4"><span class="month">Novembre</span><strong>Tester et confronter</strong><p>Méthode d’évaluation, cas pilotes, IA maîtrisée et scénarios.</p></article>
+            <article class="milestone reveal d5"><span class="month">Décembre</span><strong>Formuler les propositions</strong><p>Bénéfices, limites, conditions de faisabilité et suites.</p></article>
+        </div>
+        <div class="final-targets">
+            <div class="target reveal d3"><strong>Compréhension commune</strong>Un vocabulaire et des objectifs partagés.</div>
+            <div class="target reveal d4"><strong>Diagnostic explicite</strong>Un périmètre clair et des limites assumées.</div>
+            <div class="target reveal d5"><strong>Cadre de lecture</strong>Des dépendances et risques mieux qualifiés.</div>
+            <div class="target reveal d6"><strong>Options réalistes</strong>Des pistes avec leurs conditions et contreparties.</div>
+        </div>
+    </div>
+    <div class="closing-strip"><p>La souveraineté numérique ne commande pas une rupture générale. Elle organise notre capacité de choix et de continuité.</p><img class="closing-logo" alt="Paradigm Brussels" src="data:image/png;base64,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"></div>
+</section>
+
+</main>
+</div>
+
+<!-- === CONTRÔLES HORS DE LA SCÈNE 1920×1080 === -->
+<nav class="deck-controls" aria-label="Navigation de la présentation">
+    <button id="prevButton" type="button" aria-label="Diapositive précédente">‹</button>
+    <div class="deck-counter" id="deckCounter">01 / 11</div>
+    <div class="progress-shell" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
+    <button id="nextButton" type="button" aria-label="Diapositive suivante">›</button>
+</nav>
+
+<!-- === COMMANDES D'ÉDITION INLINE === -->
+<div class="edit-hotzone" aria-hidden="true"></div>
+<button class="edit-toggle" id="editToggle" type="button" title="Mode édition (E)">Éditer</button>
+<div class="edit-toast" id="editToast" role="status" aria-live="polite"></div>
+
+<script>
+/* ===========================================
+   CONTRÔLEUR DE PRÉSENTATION
+   Navigation clavier, souris, tactile et mise à l'échelle fixe.
+   =========================================== */
+class SlidePresentation {
+    constructor() {
+        this.stage = document.getElementById('deckStage');
+        this.slides = Array.from(this.stage.querySelectorAll('.slide'));
+        this.counter = document.getElementById('deckCounter');
+        this.progress = document.getElementById('progressBar');
+        this.currentSlide = 0;
+        this.wheelLock = false;
+        this.touchStartX = null;
+        this.setupStageScale();
+        this.setupNavigation();
+        this.showSlide(0);
+    }
+
+    setupStageScale() {
+        const scale = () => {
+            const factor = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+            const x = (window.innerWidth - 1920 * factor) / 2;
+            const y = (window.innerHeight - 1080 * factor) / 2;
+            this.stage.style.transform = `translate(${x}px, ${y}px) scale(${factor})`;
+        };
+        scale();
+        window.addEventListener('resize', scale);
+    }
+
+    setupNavigation() {
+        document.getElementById('prevButton').addEventListener('click', () => this.prev());
+        document.getElementById('nextButton').addEventListener('click', () => this.next());
+
+        document.addEventListener('keydown', (event) => {
+            if (event.target.isContentEditable) return;
+            if (['ArrowRight', 'ArrowDown', ' ', 'PageDown'].includes(event.key)) { event.preventDefault(); this.next(); }
+            if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(event.key)) { event.preventDefault(); this.prev(); }
+            if (event.key === 'Home') { event.preventDefault(); this.showSlide(0); }
+            if (event.key === 'End') { event.preventDefault(); this.showSlide(this.slides.length - 1); }
+        });
+
+        document.addEventListener('wheel', (event) => {
+            if (this.wheelLock || event.target.isContentEditable) return;
+            if (Math.abs(event.deltaY) < 20) return;
+            this.wheelLock = true;
+            window.setTimeout(() => { this.wheelLock = false; }, 620);
+            event.deltaY > 0 ? this.next() : this.prev();
+        }, { passive: true });
+
+        document.addEventListener('touchstart', (event) => {
+            this.touchStartX = event.touches[0].clientX;
+        }, { passive: true });
+        document.addEventListener('touchend', (event) => {
+            if (this.touchStartX === null) return;
+            const delta = event.changedTouches[0].clientX - this.touchStartX;
+            if (Math.abs(delta) > 55) delta < 0 ? this.next() : this.prev();
+            this.touchStartX = null;
+        }, { passive: true });
+
+        this.stage.addEventListener('click', (event) => {
+            if (document.body.classList.contains('editing') || event.target.closest('button, a, [contenteditable="true"]')) return;
+            const rect = this.stage.getBoundingClientRect();
+            const ratio = (event.clientX - rect.left) / rect.width;
+            if (ratio < .16) this.prev();
+            if (ratio > .84) this.next();
+        });
+    }
+
+    next() { this.showSlide(this.currentSlide + 1); }
+    prev() { this.showSlide(this.currentSlide - 1); }
+
+    showSlide(index) {
+        this.currentSlide = Math.max(0, Math.min(index, this.slides.length - 1));
+        this.slides.forEach((slide, slideIndex) => {
+            const isCurrent = slideIndex === this.currentSlide;
+            slide.classList.toggle('active', isCurrent);
+            slide.classList.toggle('visible', isCurrent);
+        });
+        this.counter.textContent = `${String(this.currentSlide + 1).padStart(2, '0')} / ${String(this.slides.length).padStart(2, '0')}`;
+        this.progress.style.width = `${((this.currentSlide + 1) / this.slides.length) * 100}%`;
+    }
+}
+
+/* ===========================================
+   ÉDITEUR INLINE
+   E active l'édition. Ctrl/Cmd+S exporte une copie HTML autonome.
+   =========================================== */
+class InlineEditor {
+    constructor() {
+        this.isActive = false;
+        this.stage = document.getElementById('deckStage');
+        this.hotzone = document.querySelector('.edit-hotzone');
+        this.toggle = document.getElementById('editToggle');
+        this.toast = document.getElementById('editToast');
+        this.hideTimeout = null;
+        this.toastTimeout = null;
+        this.storageKey = 'chantier-souverainete-atlas-2026-09-clarte-paradigm';
+        this.restore();
+        this.bind();
+    }
+
+    bind() {
+        this.toggle.addEventListener('click', () => this.toggleEditMode());
+        this.hotzone.addEventListener('click', () => this.toggleEditMode());
+        this.hotzone.addEventListener('mouseenter', () => { clearTimeout(this.hideTimeout); this.toggle.classList.add('show'); });
+        this.hotzone.addEventListener('mouseleave', () => this.scheduleHide());
+        this.toggle.addEventListener('mouseenter', () => clearTimeout(this.hideTimeout));
+        this.toggle.addEventListener('mouseleave', () => this.scheduleHide());
+        this.stage.addEventListener('input', () => { if (this.isActive) this.autoSave(); });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.target.isContentEditable) {
+                if (event.key === 'Escape') event.target.blur();
+                if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's') { event.preventDefault(); this.exportFile(); }
+                return;
+            }
+            if ((event.key === 'e' || event.key === 'E') && !event.ctrlKey && !event.metaKey) this.toggleEditMode();
+            if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's') { event.preventDefault(); this.exportFile(); }
+        });
+    }
+
+    scheduleHide() {
+        this.hideTimeout = window.setTimeout(() => {
+            if (!this.isActive) this.toggle.classList.remove('show');
+        }, 400);
+    }
+
+    toggleEditMode() {
+        this.isActive = !this.isActive;
+        document.body.classList.toggle('editing', this.isActive);
+        this.toggle.classList.toggle('active', this.isActive);
+        this.toggle.textContent = this.isActive ? 'Terminer' : 'Éditer';
+        const selectors = 'h1, h2, h3, p, strong, span:not(.brand-mark), .big-quote, .bar-value, .number';
+        this.stage.querySelectorAll(selectors).forEach((element) => {
+            if (this.isActive) { element.setAttribute('contenteditable', 'true'); element.setAttribute('spellcheck', 'false'); }
+            else { element.removeAttribute('contenteditable'); element.removeAttribute('spellcheck'); }
+        });
+        this.showToast(this.isActive ? 'Mode édition actif · Ctrl+S pour exporter' : 'Modifications enregistrées dans le navigateur');
+    }
+
+    autoSave() {
+        try {
+            const clone = this.stage.cloneNode(true);
+            clone.querySelectorAll('[contenteditable]').forEach((element) => {
+                element.removeAttribute('contenteditable');
+                element.removeAttribute('spellcheck');
+            });
+            localStorage.setItem(this.storageKey, JSON.stringify({ version: 1, html: clone.innerHTML }));
+        } catch (error) { /* Le deck reste utilisable si le stockage est indisponible. */ }
+    }
+
+    restore() {
+        try {
+            const raw = localStorage.getItem(this.storageKey);
+            if (!raw) return;
+            const data = JSON.parse(raw);
+            if (data && data.version === 1 && data.html) {
+                this.stage.innerHTML = data.html;
+                this.showToast('Brouillon restauré depuis le navigateur');
+            }
+        } catch (error) { /* La version originale est conservée en cas d'erreur. */ }
+    }
+
+    exportFile() {
+        const clone = document.documentElement.cloneNode(true);
+        clone.querySelectorAll('[contenteditable]').forEach((element) => {
+            element.removeAttribute('contenteditable');
+            element.removeAttribute('spellcheck');
+        });
+        clone.querySelectorAll('.edit-hotzone, .edit-toggle, .edit-toast').forEach((element) => element.remove());
+        const html = '<!DOCTYPE html>\n' + clone.outerHTML;
+        const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'chantier-souverainete-rapport-intermediaire-atlas-septembre-2026.html';
+        link.click();
+        URL.revokeObjectURL(link.href);
+        this.showToast('Fichier HTML exporté');
+    }
+
+    showToast(message) {
+        this.toast.textContent = message;
+        this.toast.classList.add('show');
+        clearTimeout(this.toastTimeout);
+        this.toastTimeout = window.setTimeout(() => this.toast.classList.remove('show'), 2600);
+    }
+}
+
+/* === INITIALISATION === */
+const editor = new InlineEditor();
+const presentation = new SlidePresentation();
+</script>
+</body>
+</html>

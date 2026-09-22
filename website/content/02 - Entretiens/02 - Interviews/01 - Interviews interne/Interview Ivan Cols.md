@@ -1,9 +1,9 @@
 ---
 type:
   - Interview
-published:
-created: 2026-04-27
 author: Etudiants SOLVAY
+created: 2026-04-27
+Validated: 2026-09-03
 ---
 
 ## 1. Rôle et quotidien chez Paradigm

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Une minute d'Internet, une pile aussi haute que l'Iris Tower</title>
+  <desc id="desc">16,7 pétaoctets de trafic correspondent à la capacité de 16 700 SSD de 1 To. Empilés avec une épaisseur supposée de 8 mm, ils atteignent approximativement la hauteur de l'Iris Tower. Hauteurs arrondies et largeur des SSD amplifiée pour la lisibilité.</desc>
+  <defs>
+    <radialGradient id="halo"><stop stop-color="#EEF5FF"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>
+    <linearGradient id="glass"><stop stop-color="#D3E4F7"/><stop offset="0.5" stop-color="#FAFCFF"/><stop offset="1" stop-color="#AFCBE9"/></linearGradient>
+    <linearGradient id="side"><stop stop-color="#377BC1"/><stop offset="1" stop-color="#102957"/></linearGradient>
+    <linearGradient id="metal" x2="0" y2="1"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#DDE7F4"/></linearGradient>
+    <pattern id="windows" width="12" height="19" patternUnits="userSpaceOnUse"><rect width="12" height="19" fill="none"/><path d="M0 0H12 M1 0V19" fill="none" stroke="#FFFFFF" stroke-width="1.7"/><path d="M10 0V19" stroke="#7890B8" stroke-opacity="0.35"/></pattern>
+    <clipPath id="frontClip"><path d="M1160 884V516 C1160 420 1199 332 1304 264V884Z"/></clipPath>
+    <g id="ssd" stroke-linejoin="round">
+      <path d="M0 15L30 0H225L198 15Z" fill="url(#metal)" stroke="#7890B8" stroke-width="1.2"/>
+      <path d="M0 15H198V29H0Z" fill="#EEF5FF" stroke="#7890B8" stroke-width="1.2"/>
+      <path d="M198 15L225 0V14L198 29Z" fill="#C5D9F0" stroke="#7890B8" stroke-width="1.2"/>
+      <path d="M12 23H24 M172 23H184" stroke="#7890B8" stroke-width="2" stroke-linecap="round"/>
+      <path d="M57 19H108V25H57Z M115 19H140V25H115Z" fill="#102957"/>
+      <path d="M62 20V24 M68 20V24 M74 20V24 M80 20V24 M86 20V24 M92 20V24 M98 20V24 M121 20V24 M127 20V24 M133 20V24" stroke="#66A9FF" stroke-width="1.2"/>
+    </g>
+  </defs>
+  <rect width="1920" height="1080" fill="#FCFDFF"/>
+  <ellipse cx="1030" cy="555" rx="720" ry="440" fill="url(#halo)"/>
+  <g font-family="Inter, Arial, Helvetica, sans-serif" fill="#102957">
+    <text x="960" y="91" text-anchor="middle" font-size="20" fill="#7890B8" letter-spacing="3">LE TRAFIC INTERNET MONDIAL EN 60 SECONDES</text>
+    <text x="960" y="163" text-anchor="middle" font-size="54" font-weight="700">Une pile aussi haute que <tspan fill="#1769E8">l’Iris Tower</tspan></text>
+
+    <!-- Même ligne de sol et hauteur volontairement arrondie pour la comparaison. -->
+    <path d="M370 264H1455" fill="none" stroke="#66A9FF" stroke-width="1.5" stroke-dasharray="5 9" opacity="0.65"/>
+    <path d="M320 884H1560" stroke="#DDE7F4" stroke-width="2"/>
+
+    <!-- Empilement symbolique : les boîtiers sont agrandis pour être identifiables. -->
+    <g transform="translate(520 264) scale(1 1.001616)">
+      <use xlink:href="#ssd" y="590"/><use xlink:href="#ssd" y="560"/>
+      <use xlink:href="#ssd" y="530"/><use xlink:href="#ssd" y="500"/>
+      <use xlink:href="#ssd" y="470"/><use xlink:href="#ssd" y="440"/>
+      <use xlink:href="#ssd" y="410"/><use xlink:href="#ssd" y="380"/>
+      <use xlink:href="#ssd" y="350"/><use xlink:href="#ssd" y="320"/>
+      <use xlink:href="#ssd" y="290"/><use xlink:href="#ssd" y="260"/>
+      <use xlink:href="#ssd" y="230"/><use xlink:href="#ssd" y="200"/>
+      <use xlink:href="#ssd" y="170"/><use xlink:href="#ssd" y="140"/>
+      <use xlink:href="#ssd" y="110"/><use xlink:href="#ssd" y="80"/>
+      <use xlink:href="#ssd" y="50"/><use xlink:href="#ssd" y="20"/>
+      <!-- Boîtier supérieur, capot visible avec étiquette et vis. -->
+      <path d="M0 15L30 0H225L198 15Z" fill="url(#metal)" stroke="#7890B8" stroke-width="1.2"/>
+      <path d="M0 15H198V29H0Z M198 15L225 0V14L198 29Z" fill="#DDE7F4" stroke="#7890B8" stroke-width="1.2"/>
+      <path d="M62 3H174L156 12H44Z" fill="#1769E8"/>
+      <path d="M22 11H27 M38 4H43 M182 11H187 M205 4H210" stroke="#7890B8" stroke-width="2" stroke-linecap="round"/>
+    </g>
+
+    <!-- Iris Tower : volume courbe, couronnement oblique et aile technique blanche. -->
+    <g stroke-linejoin="round">
+      <path d="M1304 292C1337 306 1354 335 1360 371V884H1304Z" fill="url(#side)" stroke="#7890B8" stroke-width="1.3"/>
+      <path d="M1160 884V516 C1160 420 1199 332 1304 264V884Z" fill="url(#glass)" stroke="#7890B8" stroke-width="1.3"/>
+      <rect x="1150" y="260" width="160" height="628" fill="url(#windows)" clip-path="url(#frontClip)"/>
+      <path d="M1304 264V884" stroke="#FFFFFF" stroke-width="3"/>
+      <path d="M1318 316V884 M1332 327V884 M1346 345V884" stroke="#66A9FF" stroke-width="1" opacity="0.7"/>
+      <path d="M1306 389H1360 M1306 419H1360 M1306 449H1360 M1306 479H1360 M1306 509H1360 M1306 539H1360 M1306 569H1360 M1306 599H1360 M1306 629H1360 M1306 659H1360 M1306 689H1360 M1306 719H1360 M1306 749H1360 M1306 779H1360 M1306 809H1360 M1306 839H1360 M1306 869H1360" stroke="#66A9FF" stroke-width="1.4" opacity="0.6"/>
+      <path d="M1360 467L1391 460V884H1360Z" fill="#FFFFFF" stroke="#B9CDE6" stroke-width="1.4"/>
+      <path d="M1369 466V884 M1378 464V884 M1387 462V884" stroke="#DDE7F4" stroke-width="2"/>
+      <path d="M1355 461L1395 454V463L1355 470Z" fill="#EEF5FF" stroke="#B9CDE6"/>
+      <rect x="1198" y="856" width="65" height="28" fill="#7890B8" opacity="0.35"/>
+    </g>
+
+    <g text-anchor="middle">
+      <text x="950" y="514" fill="#1769E8" font-size="64" font-weight="700">16,7 Po</text>
+      <text x="950" y="553" fill="#7890B8" font-size="22">en une minute</text>
+      <path d="M780 591H1120" stroke="#66A9FF" stroke-width="1.5" stroke-dasharray="5 8"/>
+      <text x="633" y="933" font-size="34" font-weight="700">16 700 SSD</text>
+      <text x="633" y="968" font-size="21" fill="#7890B8">de 1 To, empilés</text>
+      <text x="1275" y="933" font-size="34" font-weight="700">Iris Tower</text>
+      <text x="1275" y="968" font-size="21" fill="#7890B8">Bruxelles</text>
+      <text x="960" y="1042" font-size="15" fill="#7890B8">Comparaison arrondie · SSD de 1 To et 8 mm · Équivalent de capacité · Empilement illustratif · Source : UIT 2025</text>
+    </g>
+  </g>
+  <metadata>Référence architecturale : EmDee, Belgique - Bruxelles - Tour Iris - 02.jpg, Wikimedia Commons, https://commons.wikimedia.org/wiki/File:Belgique_-_Bruxelles_-_Tour_Iris_-_02.jpg ; CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/ ; interprétation vectorielle simplifiée. Calcul : 16 700 × 8 mm = 133,6 m ; tour : environ 137 m. Source trafic : https://www.itu.int/itu-d/reports/statistics/2025/10/15/ff25-internet-traffic/</metadata>
+</svg>

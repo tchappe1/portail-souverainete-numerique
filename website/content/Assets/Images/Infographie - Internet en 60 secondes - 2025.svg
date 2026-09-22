@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Internet en 60 secondes, édition 2025</title>
+  <desc id="desc">Infographie présentant 16,7 pétaoctets de trafic Internet mondial par minute et six indicateurs d'activité numérique.</desc>
+  <defs>
+    <radialGradient id="backgroundHalo" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#EAF3FF" stop-opacity="0.95"/>
+      <stop offset="58%" stop-color="#F6FAFF" stop-opacity="0.52"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="coreGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#EEF5FF"/>
+    </linearGradient>
+    <linearGradient id="infoGradient" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#EEF5FF"/>
+      <stop offset="50%" stop-color="#F5FFFC"/>
+      <stop offset="100%" stop-color="#F3F0FF"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#1769E8" flood-opacity="0.08"/>
+    </filter>
+    <filter id="coreShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="12" stdDeviation="28" flood-color="#1769E8" flood-opacity="0.14"/>
+    </filter>
+    <style>
+      .font { font-family: Inter, Arial, Helvetica, sans-serif; }
+      .navy { fill: #102957; }
+      .blue { fill: #1769E8; }
+      .muted { fill: #7890B8; }
+      .card { fill: #FFFFFF; stroke: #DDE7F4; stroke-width: 1.5; }
+      .card-value { font-size: 36px; font-weight: 750; letter-spacing: -0.7px; }
+      .card-label { font-size: 20px; font-weight: 650; }
+      .card-note { font-size: 14px; font-weight: 450; }
+      .source-ref { font-size: 13px; font-weight: 700; letter-spacing: 0.6px; }
+      .connector { fill: none; stroke: #66A9FF; stroke-width: 2; stroke-dasharray: 7 9; opacity: 0.72; }
+      .icon-line { fill: none; stroke: #1769E8; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <rect width="1920" height="1080" fill="#FCFDFF"/>
+  <ellipse cx="960" cy="500" rx="690" ry="500" fill="url(#backgroundHalo)"/>
+
+  <g class="font">
+    <g aria-label="En-tête">
+      <rect x="82" y="54" width="242" height="32" rx="16" fill="#EEF5FF"/>
+      <text x="203" y="76" class="blue" text-anchor="middle" font-size="13" font-weight="750" letter-spacing="1.8">ÉDITION 2025 · MONDE</text>
+      <text x="960" y="77" class="navy" text-anchor="middle" font-size="52" font-weight="780" letter-spacing="-1.7">Internet en <tspan fill="#1769E8">60 secondes</tspan></text>
+      <text x="960" y="119" class="muted" text-anchor="middle" font-size="22">Ce qui transite et ce que nous faisons en une minute</text>
+      <text x="1838" y="75" class="muted" text-anchor="end" font-size="12" font-weight="650" letter-spacing="1.7">COMPRENDRE · QUESTIONNER · RÉDUIRE</text>
+    </g>
+
+    <g aria-label="Connecteurs">
+      <path class="connector" d="M570 278 C675 278 680 342 766 367"/>
+      <path class="connector" d="M570 498 C680 498 700 498 742 498"/>
+      <path class="connector" d="M570 718 C675 718 680 654 766 629"/>
+      <path class="connector" d="M1350 278 C1245 278 1240 342 1154 367"/>
+      <path class="connector" d="M1350 498 C1240 498 1220 498 1178 498"/>
+      <path class="connector" d="M1350 718 C1245 718 1240 654 1154 629"/>
+      <circle cx="666" cy="302" r="4" fill="#16C8AA"/>
+      <circle cx="686" cy="498" r="4" fill="#16C8AA"/>
+      <circle cx="666" cy="694" r="4" fill="#16C8AA"/>
+      <circle cx="1254" cy="302" r="4" fill="#16C8AA"/>
+      <circle cx="1234" cy="498" r="4" fill="#16C8AA"/>
+      <circle cx="1254" cy="694" r="4" fill="#16C8AA"/>
+    </g>
+
+    <g aria-label="Recherches Google">
+      <rect class="card" x="80" y="198" width="490" height="160" rx="24" filter="url(#softShadow)"/>
+      <circle cx="137" cy="278" r="35" fill="#EEF5FF"/>
+      <circle cx="131" cy="272" r="13" class="icon-line"/>
+      <path d="M141 282 L153 294" class="icon-line"/>
+      <text x="190" y="257" class="navy card-value">&gt; 9,5 millions</text>
+      <text x="190" y="289" class="navy card-label">de recherches Google</text>
+      <text x="190" y="320" class="muted card-note">moyenne annuelle · donnée 2025</text>
+      <text x="540" y="226" class="muted source-ref" text-anchor="end">[2]</text>
+    </g>
+
+    <g aria-label="Messages ChatGPT">
+      <rect class="card" x="80" y="418" width="490" height="160" rx="24" filter="url(#softShadow)"/>
+      <circle cx="137" cy="498" r="35" fill="#F3F0FF"/>
+      <path d="M120 487 Q120 478 130 478 H146 Q156 478 156 488 V500 Q156 510 146 510 H137 L127 518 V510 Q120 508 120 500 Z" class="icon-line" stroke="#7357E8"/>
+      <circle cx="130" cy="494" r="2.5" fill="#7357E8"/>
+      <circle cx="138" cy="494" r="2.5" fill="#7357E8"/>
+      <circle cx="146" cy="494" r="2.5" fill="#7357E8"/>
+      <text x="190" y="477" class="navy card-value">≈ 1,8 million</text>
+      <text x="190" y="509" class="navy card-label">de messages à ChatGPT</text>
+      <text x="190" y="540" class="muted card-note">moyenne hebdomadaire · juillet 2025</text>
+      <text x="540" y="446" class="muted source-ref" text-anchor="end">[3]</text>
+    </g>
+
+    <g aria-label="Vidéos publiées sur YouTube">
+      <rect class="card" x="80" y="638" width="490" height="160" rx="24" filter="url(#softShadow)"/>
+      <circle cx="137" cy="718" r="35" fill="#EEF5FF"/>
+      <rect x="117" y="704" width="40" height="27" rx="7" class="icon-line"/>
+      <path d="M133 711 L146 718 L133 725 Z" fill="#1769E8"/>
+      <path d="M137 697 V689 M129 693 L137 685 L145 693" class="icon-line"/>
+      <text x="190" y="697" class="navy card-value">&gt; 13 900</text>
+      <text x="190" y="729" class="navy card-label">vidéos publiées sur YouTube</text>
+      <text x="190" y="760" class="muted card-note">moyenne quotidienne · avril 2025</text>
+      <text x="540" y="666" class="muted source-ref" text-anchor="end">[4]</text>
+    </g>
+
+    <g aria-label="Heures regardées sur Netflix">
+      <rect class="card" x="1350" y="198" width="490" height="160" rx="24" filter="url(#softShadow)"/>
+      <circle cx="1407" cy="278" r="35" fill="#EEF5FF"/>
+      <rect x="1387" y="263" width="40" height="29" rx="7" class="icon-line"/>
+      <path d="M1402 270 L1415 277.5 L1402 285 Z" fill="#1769E8"/>
+      <path d="M1421 294 L1428 301" class="icon-line"/>
+      <circle cx="1428" cy="301" r="6" fill="#FFFFFF" stroke="#1769E8" stroke-width="3"/>
+      <text x="1460" y="257" class="navy card-value">&gt; 358 000</text>
+      <text x="1460" y="289" class="navy card-label">heures regardées sur Netflix</text>
+      <text x="1460" y="320" class="muted card-note">moyenne · premier semestre 2024</text>
+      <text x="1810" y="226" class="muted source-ref" text-anchor="end">[5]</text>
+    </g>
+
+    <g aria-label="Écoutes audio en streaming">
+      <rect class="card" x="1350" y="418" width="490" height="160" rx="24" filter="url(#softShadow)"/>
+      <circle cx="1407" cy="498" r="35" fill="#ECFCF8"/>
+      <path d="M1389 501 V493 A18 18 0 0 1 1425 493 V501" class="icon-line" stroke="#16C8AA"/>
+      <rect x="1386" y="498" width="8" height="17" rx="4" fill="#16C8AA"/>
+      <rect x="1420" y="498" width="8" height="17" rx="4" fill="#16C8AA"/>
+      <path d="M1404 510 Q1407 514 1412 510" fill="none" stroke="#16C8AA" stroke-width="3" stroke-linecap="round"/>
+      <text x="1460" y="477" class="navy card-value">≈ 9,1 millions</text>
+      <text x="1460" y="509" class="navy card-label">d'écoutes audio en streaming</text>
+      <text x="1460" y="540" class="muted card-note">toutes plateformes mondiales · 2024</text>
+      <text x="1810" y="446" class="muted source-ref" text-anchor="end">[6]</text>
+    </g>
+
+    <g aria-label="Contributions GitHub">
+      <rect class="card" x="1350" y="638" width="490" height="160" rx="24" filter="url(#softShadow)"/>
+      <circle cx="1407" cy="718" r="35" fill="#F3F0FF"/>
+      <path d="M1399 705 L1388 718 L1399 731 M1415 705 L1426 718 L1415 731 M1411 700 L1403 736" fill="none" stroke="#7357E8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="1460" y="697" class="navy card-value">&gt; 9 800</text>
+      <text x="1460" y="729" class="navy card-label">contributions sur GitHub</text>
+      <text x="1460" y="760" class="muted card-note">projets publics et privés · 2024</text>
+      <text x="1810" y="666" class="muted source-ref" text-anchor="end">[7]</text>
+    </g>
+
+    <g aria-label="Trafic Internet mondial en une minute">
+      <circle cx="960" cy="498" r="225" fill="#FFFFFF" opacity="0.75" filter="url(#coreShadow)"/>
+      <circle cx="960" cy="498" r="210" fill="url(#coreGradient)" stroke="#DDE7F4" stroke-width="2"/>
+      <circle cx="960" cy="498" r="220" fill="none" stroke="#DDE7F4" stroke-width="12"/>
+      <circle cx="960" cy="498" r="220" fill="none" stroke="#1769E8" stroke-width="12" stroke-linecap="round" stroke-dasharray="1147 235" transform="rotate(-90 960 498)"/>
+      <circle cx="960" cy="498" r="220" fill="none" stroke="#16C8AA" stroke-width="12" stroke-linecap="round" stroke-dasharray="207 1175" stroke-dashoffset="-1165" transform="rotate(-90 960 498)"/>
+      <circle cx="960" cy="278" r="7" fill="#1769E8"/>
+      <text x="960" y="356" class="blue" text-anchor="middle" font-size="13" font-weight="750" letter-spacing="1.8">TRAFIC INTERNET MONDIAL [1]</text>
+      <text x="960" y="455" class="navy" text-anchor="middle" font-size="104" font-weight="800" letter-spacing="-4">16,7</text>
+      <text x="960" y="500" class="blue" text-anchor="middle" font-size="27" font-weight="800" letter-spacing="1.4">PÉTAOCTETS</text>
+      <text x="960" y="545" class="navy" text-anchor="middle" font-size="25" font-weight="650">en 60 secondes</text>
+      <rect x="835" y="569" width="250" height="42" rx="21" fill="#FFFFFF" stroke="#DDE7F4"/>
+      <text x="960" y="596" class="muted" text-anchor="middle" font-size="17" font-weight="600">≈ 16,7 millions de Go</text>
+      <circle cx="880" cy="646" r="5" fill="#1769E8"/>
+      <text x="893" y="651" class="muted" font-size="14" font-weight="600">83 % fixe</text>
+      <circle cx="992" cy="646" r="5" fill="#16C8AA"/>
+      <text x="1005" y="651" class="muted" font-size="14" font-weight="600">17 % mobile</text>
+    </g>
+
+    <g aria-label="Repère de connectivité mondiale">
+      <rect x="322" y="850" width="1276" height="104" rx="28" fill="url(#infoGradient)" stroke="#DDE7F4" stroke-width="1.5"/>
+      <g transform="translate(372 876)">
+        <circle cx="24" cy="24" r="22" fill="#FFFFFF" stroke="#66A9FF" stroke-width="2"/>
+        <circle cx="24" cy="24" r="14" fill="none" stroke="#1769E8" stroke-width="2"/>
+        <path d="M10 24 H38 M24 10 C18 16 18 32 24 38 M24 10 C30 16 30 32 24 38" fill="none" stroke="#1769E8" stroke-width="2"/>
+      </g>
+      <text x="445" y="889" class="navy" font-size="17" font-weight="700">L'échelle humaine</text>
+      <text x="445" y="925" class="navy" font-size="28" font-weight="780"><tspan fill="#1769E8">6 milliards</tspan> de personnes en ligne</text>
+      <line x1="960" y1="872" x2="960" y2="932" stroke="#DDE7F4" stroke-width="1.5"/>
+      <text x="1010" y="889" class="navy" font-size="17" font-weight="700">L'angle mort</text>
+      <text x="1010" y="925" class="navy" font-size="28" font-weight="780"><tspan fill="#7357E8">2,2 milliards</tspan> restent hors ligne</text>
+    </g>
+
+    <g aria-label="Notes et sources">
+      <text x="960" y="991" class="muted" text-anchor="middle" font-size="14">Ces moyennes couvrent des périodes et périmètres différents : elles illustrent des ordres de grandeur et ne s'additionnent pas.</text>
+      <text x="80" y="1034" class="muted" font-size="11.5" letter-spacing="0.25">[1] UIT 2025 · [2] Google 2025 · [3] OpenAI / NBER 2025 · [4] YouTube 2025 · [5] Netflix 2024 · [6] Luminate 2024 · [7] GitHub 2024</text>
+      <text x="1840" y="1034" class="muted" text-anchor="end" font-size="11.5" font-weight="700" letter-spacing="1.3">FORMATION NUMÉRIQUE RESPONSABLE · PARADIGM</text>
+    </g>
+  </g>
+</svg>

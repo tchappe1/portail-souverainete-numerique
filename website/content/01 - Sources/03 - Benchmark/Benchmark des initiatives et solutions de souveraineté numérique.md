@@ -14,8 +14,6 @@ Elle est destinée à être enrichie et actualisée par le GT4 au fur et à mesu
 
 > **Principe :** ne pas chercher uniquement des « solutions souveraines », mais comprendre ce que d'autres organisations ont concrètement fait, pourquoi elles l'ont fait, avec quels résultats, quelles difficultés et ce qui pourrait être transposable à Bruxelles.
 
----
-
 # 1. Périmètre du benchmark
 
 Le benchmark initial couvre plusieurs dimensions de la souveraineté numérique :
@@ -32,7 +30,6 @@ Le benchmark initial couvre plusieurs dimensions de la souveraineté numérique 
 
 Les références étudiées sont principalement européennes, avec quelques exemples internationaux utilisés comme points de comparaison ou signaux d'alerte.
 
----
 
 # 2. Premières pistes identifiées pour Paradigm
 
@@ -69,7 +66,6 @@ Le benchmark suggère de s'inspirer du modèle OSPO avec une petite équipe déd
 - Comparer les périmètres et critères de risque.
 - Évaluer la transposabilité à Paradigm.
 
----
 
 ## 2.2 Anticiper la sortie de VMware / Broadcom
 
@@ -97,8 +93,6 @@ L'idée proposée est de tester Proxmox sur un environnement non critique avant 
 - Comparer VMware / Proxmox / autres alternatives.
 - Identifier les coûts et difficultés de migration.
 - Vérifier les conditions dans lesquelles ces migrations sont réellement pertinentes pour Paradigm.
-
----
 
 ## 2.3 Piloter une messagerie souveraine
 
@@ -138,7 +132,6 @@ L'existence de l'infrastructure Sibelga est présentée comme un avantage potent
 - Identifier les freins utilisateurs et organisationnels.
 - Identifier d'autres expériences européennes.
 
----
 
 ## 2.4 Migrer progressivement Windows / SQL Server vers Linux / PostgreSQL
 
@@ -175,7 +168,6 @@ Le benchmark identifie cette piste comme potentiellement plus facilement réalis
 - Identifier les applications qui constituent des blocages.
 - Examiner les impacts sur les compétences internes.
 
----
 
 ## 2.5 Lancer un DBaaS souverain
 
@@ -214,8 +206,6 @@ Un service de base de données souverain pourrait combiner :
 - Identifier les exigences de sécurité et d'exploitation.
 - Évaluer la demande potentielle des administrations régionales.
 
----
-
 ## 2.6 Explorer les alternatives aux ERP propriétaires
 
 **Priorité : 2 — moyen terme**  
@@ -251,8 +241,6 @@ pourrait constituer une piste intéressante.
 - Comparer Odoo et d'autres alternatives.
 - Identifier les coûts de migration.
 - Identifier les administrations ayant réalisé ce type de migration.
-
----
 
 ## 2.7 Développer une infrastructure IA souveraine
 
@@ -290,8 +278,6 @@ Un cas d'usage cité est l'utilisation d'agents IA pour FixMyStreet, notamment p
 - Examiner les coûts et modèles économiques.
 - Examiner les exigences de sécurité et de certification.
 
----
-
 ## 2.8 Se positionner comme opérateur certifié
 
 **Priorité : 3 — long terme**  
@@ -323,8 +309,6 @@ Le benchmark identifie une possibilité de **positionnement stratégique de Para
 - Conditions de certification.
 - Coût et durée.
 - Intérêt réel pour Paradigm.
-
----
 
 ## 2.9 Rejoindre les réseaux européens
 
@@ -363,8 +347,6 @@ La coopération européenne peut permettre :
 - Identifier les financements accessibles.
 - Identifier les partenaires belges et européens potentiels.
 
----
-
 # 3. Signal d'alerte : le cas iranien
 
 Le benchmark utilise également le cas iranien comme **scénario extrême de dépendance numérique**.
@@ -388,4 +370,4 @@ Le cas iranien doit être conservé comme **signal d'alerte / scénario extrême
 
 ## 📎 Sources
 
-[[Chantier 12 - Souveraineté Numérique - Benchmark V1 - juin 2026.docx]]
+[[Field Study SOLVAY - Benchmark.pdf]]
