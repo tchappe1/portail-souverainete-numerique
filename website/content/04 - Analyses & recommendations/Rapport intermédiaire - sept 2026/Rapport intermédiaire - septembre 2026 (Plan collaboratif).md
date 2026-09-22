@@ -9,7 +9,7 @@ statut: À amender collectivement
 > [!info] Objet de cette fiche
 > Plan de travail du rapport intermédiaire du **Chantier Souveraineté numérique**, destiné aux participants du chantier 12. Les titres, messages et exemples proposés peuvent être modifiés directement avant la rédaction du rapport. Les propositions ci-dessous restent à discuter collectivement.
 >
-> Base de travail : [[Rapport intermédiaire V6 - septembre 2026 (Synthèse IA-GPT 5.6 Sol)|Fiche V6]].
+
 
 # Cadrage et contributions
 

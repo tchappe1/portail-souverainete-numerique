@@ -57,3 +57,9 @@ Ce corpus pourra aussi servir de contexte aux outils d'IA utilisés pour recherc
 ---
 
 **Ce cerveau grandit avec nos contributions.** L'ambition est de construire, ensemble, un patrimoine de connaissances traçable et réutilisable pour Paradigm et la Région.
+
+
+### Pour aller plus loin 
+
+👉 [[02 - 👥 Comment contribuer ?]]
+👉 [[03 - ✍️ Comment rédiger une fiche ?]]

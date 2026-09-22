@@ -12,3 +12,7 @@ npm-debug.log*
 # Obsidian (si un jour tu ajoutes un Vault local)
 vault/.obsidian/workspace.json
 vault/.obsidian/workspaces.json
+
+# Vault content (config et corbeille Obsidian)
+website/content/.obsidian/
+website/content/.trash/
